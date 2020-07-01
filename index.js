@@ -84,7 +84,7 @@ client.on("message", (msg) => {
   var cmd = args.shift().split("+")[1]
   if (this[cmd]) {
     msg.delete();
-    if (this[cmd].owneronly && msg.author.id != 270035320894914560) {
+    if (this[cmd].owneronly && (msg.author.id != 270035320894914560 && msg.author.id != 388676076294897667)) {
       msg.channel.send("You do not have access to this command!")
       return
     }
