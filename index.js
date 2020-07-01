@@ -113,7 +113,7 @@ setInterval(function() { // 🔴
     var statuses = {}
     var i;
     for (i=0;i<servers.length;i++) {
-      panel.getServerStatus(servers[i].id).then(status => {
+      panel.getServerStatus(servers[i].identifier).then(status => {
         console.log(status)
       });
     }
