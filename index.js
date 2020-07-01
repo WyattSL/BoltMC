@@ -25,6 +25,28 @@ this.db.usage = "+db <code>"
 this.db.owneronly = true
 this.db.description = "Executes SQLite3."
 
+function c_eval(msg, args) {
+  var code = args.join(" ");
+  var x = "```"
+  msg.channel.send(`${x}js\n${code}${x}`)
+  try {
+    eval(`var y = ${code}`)
+    if (y) {
+      msg.channel.send(`Success! Output: ${y}`)
+    } else {
+      msg.channel.send(`Success! No output.`)
+    }
+  } catch(err) {
+    msg.channel.send(`Error! ${x}fix\n${err}${x}`)
+  }
+}
+
+this.eval = {}
+this.eval.function = c_eval
+this.eval.usage = "+eval <code>"
+this.eval.owneronly = true
+this.eval.description = "Executes JS code."
+
 client.on("message", (msg) => {
   if (msg.author.bot) return
   if (!msg.content.startsWith("+")) return;
