@@ -51,7 +51,7 @@ client.on("message", (msg) => {
   if (msg.author.bot) return
   if (!msg.content.startsWith("+")) return;
   var args = msg.content.trim().split(" ")
-  var cmd = args.shift();
+  var cmd = args.shift().split("+")[1]
   if (this[cmd]) {
     msg.delete();
     if (this[cmd].owneronly && msg.author.id != 270035320894914560) {
