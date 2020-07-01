@@ -131,7 +131,7 @@ app.login('https://panel.boltmc.net', require("./TOKEN.json").API, (ready, msg) 
     console.log("Nodeactyl Admin ready!")
   }
 });
-panel.login('https://panel.boltmc.net', require("./TOKEN.json").API, (ready, msg) => {
+panel.login('https://panel.boltmc.net', require("./TOKEN.json").PANEL, (ready, msg) => {
   if (msg) {
     console.warn("Error whilst logging in to client: " + msg)
   }
