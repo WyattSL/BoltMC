@@ -3,6 +3,7 @@ const client = new Discord.Client()
 const shell = require("shelljs")
 const nodeactyl = require("nodeactyl")
 const app = nodeactyl.Application
+const panel = nodeactyl.Client
 
 client.on("ready", () => {
   console.log("Bot Ready")
@@ -103,6 +104,21 @@ client.on("message", (msg) => {
     this[cmd].function(msg, args);
   }
 });
+
+
+setInterval(function() { // 🔴
+  app.getAllServers().then(servers => {
+    var statuses = {}
+    var i;
+    for (i=0;i<servers.length;i++) {
+      panel.getServerStatus(servers[i].id).then(status => {
+        console.log(status)
+      });
+    }
+    var Bungee = client.guilds.first().channels.find(ch => ch.id == 728016432192946236)
+  });
+}, 2500);
+
 
 client.login(require("./TOKEN.json").TOKEN)
 app.login('0.0.0.0', require("./TOKEN.json").API, (ready, msg) => {
