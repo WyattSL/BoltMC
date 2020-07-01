@@ -119,7 +119,7 @@ setInterval(function() { // 🔴
     }
     var Bungee = client.guilds.first().channels.find(ch => ch.id == 728016432192946236)
   });
-}, 2500);
+}, 10000);
 
 
 client.login(require("./TOKEN.json").TOKEN);
