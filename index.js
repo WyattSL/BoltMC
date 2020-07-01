@@ -1,6 +1,8 @@
 const Discord = require("discord.js")
 const client = new Discord.Client()
 const shell = require("shelljs")
+const nodeactyl = require("nodeactyl")
+const app = nodeactyl.Application
 
 client.on("ready", () => {
   console.log("Bot Ready")
@@ -103,3 +105,11 @@ client.on("message", (msg) => {
 });
 
 client.login(require("./TOKEN.json").TOKEN)
+app.login('0.0.0.0', require("./TOKEN.json").API, (ready, msg) => {
+  if (msg) {
+    console.warn("Error whilst logging in: " + msg)
+  }
+  if (ready) {
+    console.log("Nodeactyl ready!")
+  }
+});
