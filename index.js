@@ -121,7 +121,7 @@ setInterval(function() { // 🔴
 
 
 client.login(require("./TOKEN.json").TOKEN)
-app.login('panel.botmc.net', require("./TOKEN.json").API, (ready, msg) => {
+app.login('https://panel.boltmc.net', require("./TOKEN.json").API, (ready, msg) => {
   if (msg) {
     console.warn("Error whilst logging in: " + msg)
   }
