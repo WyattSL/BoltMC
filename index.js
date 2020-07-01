@@ -47,6 +47,20 @@ this.eval.usage = "+eval <code>"
 this.eval.owneronly = true
 this.eval.description = "Executes JS code."
 
+function c_exec(msg, args) {
+  var cmd = args.join(" ")
+  var x = "``"
+  msg.channel.send(`Executing ${x}${cmd}${x}`)
+  var o = shell.exec(cmd).stdout
+  msg.channel.send(`Output: ${x}\`${o}${x}\``);
+}
+
+this.exec = {};
+this.exec.function = c_exec
+this.exec.usage = "+exec <code>"
+this.exec.owneronly = true
+this.exec.description = "Execute a shell command."
+
 client.on("message", (msg) => {
   if (msg.author.bot) return
   if (!msg.content.startsWith("+")) return;
