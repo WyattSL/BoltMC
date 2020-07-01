@@ -19,6 +19,7 @@ function c_db(msg, args) {
   });
 }
 
+this.db = {}
 this.db.function = c_db
 this.db.usage = "+db <code>"
 this.db.owneronly = true
