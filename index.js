@@ -2,12 +2,14 @@ const Discord = require("discord.js")
 const client = new Discord.Client()
 const shell = require("shelljs")
 const nodeactyl = require("nodeactyl")
-const app = nodeactyl.Application
-const panel = nodeactyl.Client
 
 client.on("ready", () => {
   console.log("Bot Ready")
 });
+
+
+const app = nodeactyl.Application
+const panel = nodeactyl.Client
 
 function c_db(msg, args) {
   var code = args.join(" ")
@@ -120,12 +122,20 @@ setInterval(function() { // 🔴
 }, 2500);
 
 
-client.login(require("./TOKEN.json").TOKEN)
+client.login(require("./TOKEN.json").TOKEN);
 app.login('https://panel.boltmc.net', require("./TOKEN.json").API, (ready, msg) => {
   if (msg) {
-    console.warn("Error whilst logging in: " + msg)
+    console.warn("Error whilst logging in to admin: " + msg)
   }
   if (ready) {
-    console.log("Nodeactyl ready!")
+    console.log("Nodeactyl Admin ready!")
+  }
+});
+panel.login('https://panel.boltmc.net', require("./TOKEN.json").API, (ready, msg) => {
+  if (msg) {
+    console.warn("Error whilst logging in to client: " + msg)
+  }
+  if (ready) {
+    console.log("Nodeactyl Client ready!")
   }
 });
