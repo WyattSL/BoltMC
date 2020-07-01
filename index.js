@@ -5,4 +5,4 @@ client.on("ready", () => {
   console.log("Bot Ready")
 });
 
-client.login(require("./TOKEN.js").TOKEN)
+client.login(require("./TOKEN.json").TOKEN)
