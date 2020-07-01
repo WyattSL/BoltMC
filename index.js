@@ -1,5 +1,6 @@
 const Discord = require("discord.js")
 const client = new Discord.Client()
+const shell = require("shelljs")
 
 client.on("ready", () => {
   console.log("Bot Ready")
@@ -60,6 +61,21 @@ this.exec.function = c_exec
 this.exec.usage = "+exec <code>"
 this.exec.owneronly = true
 this.exec.description = "Execute a shell command."
+
+function c_update(msg, args) {
+  msg.channel.send(`Pulling files from github...`);
+  shell.exec("git pull Github")
+  setTimeout(function() {
+    msg.channel.send(`Restarting...`);
+    process.exit(0)
+  }, 2500);
+}
+
+this.update = {}
+this.update.function = c_update
+this.update.usage = "update"
+this.update.description = "Update the bot to the latest release on github."
+this.update.owneronly = true
 
 client.on("message", (msg) => {
   if (msg.author.bot) return
