@@ -191,7 +191,9 @@ function swearCheck(client, msg) {
     var i;
     var replacetext;
     for (i = 0; i < list.length; i++) {
+      msg.channel.send(`Attempting to match: ${list[i]}`);
       if (msg.content.includes(list[i])) {
+        msg.channel.send(`Matched: ${list[i]}`);
         if (msg.deletable && !msg.deleted) msg.delete();
         if (!replacetext) replacetext = msg.content;
         var x = "";
@@ -203,6 +205,7 @@ function swearCheck(client, msg) {
         replacetext = replacetext.replace(reg, x);
       }
     }
+    msg.channel.send(`Replace: ${replacetext}`)
     if (replacetext) {
       var name = msg.member.displayName;
       var av = msg.author.displayAvatarURL;
