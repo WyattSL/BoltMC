@@ -218,7 +218,7 @@ function swearCheck(client, msg) {
 
 client.on("message", (msg) => {
   if (msg.author.bot) return
-  if (!msg.content.startsWith("+") && !msg.member.hasPermission("MANAGE_MESSAGES") swearCheck(client, msg)
+  if (!msg.content.startsWith("+") && !msg.member.hasPermission("MANAGE_MESSAGES")) swearCheck(client, msg)
   if (!msg.content.startsWith("+")) return;
   var args = msg.content.trim().split(" ")
   var cmd = args.shift().split("+")[1]
