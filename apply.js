@@ -66,30 +66,36 @@ exports.sendApplication = function(user, age, q1, q2, q3, q4, q5) {
   }
   var user = client.users.find(u => u.tag == user);
   if (!user) return 1;
-  var q = `SELECT * FROM applications WHERE id=?`;
-  db.get(q, user.id, function(err, rows) {
-    if (rows) return 3;
-    var e = new RichEmbed();
-    e.setTitle(`New Application`);
-    e.setTimestamp();
-    e.setAuthor(user.tag, user.displayAvatarURL);
-    e.setFooter(`Kindly made by ${client.owner.tag}`);
-    e.setColor(0x0000ff);
-    e.setDescription(`<@!${user.id}>`);
-    e.addField(`Age`, age);
-    e.addField(`What can you do for us?`, q1);
-    e.addField(`Why should we accept you?`, q2);
-    e.addField(`Why should we pick you, instead of another applicant?`, q3);
-    e.addField(`Why are you applying?`, q4);
-    e.addField(`What are you applying for?`, q5);
-    var id = user.id;
-    // the EXACT same application (by the same person) will have the same ID
-    var q = `INSERT INTO applications ("id", "user", "age", "q1", "q2", "q3", "q4", "q5", "msgid") VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8)`;
-    e.addField(`User ID`, id);
-    client.pending.send(e).then(ms => {
-      db.run(q, id, user.id, age, q1, q2, q3, q4, q5, ms.id);
+  return new Promise((resolve, reject) => {
+    var q = `SELECT * FROM applications WHERE id=?`;
+    db.get(q, user.id, function(err, rows) {
+      if (rows) {
+        resolve(3);
+        return;
+      }
+      var e = new RichEmbed();
+      e.setTitle(`New Application`);
+      e.setTimestamp();
+      e.setAuthor(user.tag, user.displayAvatarURL);
+      e.setFooter(`Kindly made by ${client.owner.tag}`);
+      e.setColor(0x0000ff);
+      e.setDescription(`<@!${user.id}>`);
+      e.addField(`Age`, age);
+      e.addField(`What can you do for us?`, q1);
+      e.addField(`Why should we accept you?`, q2);
+      e.addField(`Why should we pick you, instead of another applicant?`, q3);
+      e.addField(`Why are you applying?`, q4);
+      e.addField(`What are you applying for?`, q5);
+      var id = user.id;
+      // the EXACT same application (by the same person) will have the same ID
+      var q = `INSERT INTO applications ("id", "user", "age", "q1", "q2", "q3", "q4", "q5", "msgid") VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8)`;
+      e.addField(`User ID`, id);
+      client.pending.send(e).then(ms => {
+        db.run(q, id, user.id, age, q1, q2, q3, q4, q5, ms.id);
+      });
+      resolve(0);
+      return;
     });
-  return 0;
   });
 };
 
