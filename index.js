@@ -19,6 +19,18 @@ w.get("/", (req, res) => { // ensure the web server is operational
   res.sendStatus(200)
 });
 
+w.post("/players", (req, res) => {
+  if (req.query.server && req.body) { // req.body should be 1 big array
+    db.run(`DELETE FROM players WHERE server=?`, req.query.server);
+    var i;
+    for (i=0;i<req.body.length;i++) {
+      db.run(`INSERT INTO players ("server", "player") VALUES (@0, @1)`, req.query.server, req.body[i]);
+    }
+  } else {
+    res.status(400).end("server or players invalid")
+  }
+});
+
 client.on("ready", () => {
   console.log("Bot Ready")
 });
@@ -46,6 +58,30 @@ this.db.function = c_db
 this.db.usage = "+db <code>"
 this.db.owneronly = true
 this.db.description = "Executes SQLite3."
+
+function c_dball(msg, args) {
+  var code = args.join(" ");
+  var x = "```"
+  msg.channel.send(`${x}sql\n${code}${x}`)
+  db.all(code, function(err, rows) {
+    if (err) {
+      var x = "``"
+      msg.channel.send(`Execution error: ${x}\nfix${err}${x}`);
+    } else {
+      if (rows && rows[0]) {
+        msg.channel.send(`${x}json\n${JSON.stringify(rows)}${x}`);
+      } else {
+        msg.channel.send(`No results.`)
+      }
+    }
+  });
+};
+
+this.dball = {};
+this.dball.function = c_dball;
+this.db.usage = "+dball <code>"
+this.db.owneronly = true;
+this.db.description = "Queries SQLite3"
 
 function c_eval(msg, args) {
   var code = args.join(" ");
