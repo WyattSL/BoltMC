@@ -208,16 +208,16 @@ function c_install(msg, args) {
         "4️⃣", // 4
         "5️⃣" // 5
       ]
-      for (i=0;i<4;i++) { // displays 5, 0 is considered the first.
+      for (i=0;i<5;i++) {
         var p = plugins[i];
         if (!p) break;
-        e.addField(`[${i+1}] ${p.name}`, `${p.description}`);
+        e.addField(`[${i+1}] ${p.name}`, `${p.tag}`);
         options[reactions[i]] = p;
       }
       e.setFooter("Bot courtesy of WyattL#3477");
       msg.channel.send(e).then(ms => {
         var i;
-        for (i=0;i<options.length;i++) {
+        for (i=0;i<reactions.length;i++) {
           ms.react(reactions[i])
         }
       });
