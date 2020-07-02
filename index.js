@@ -234,15 +234,16 @@ function c_install(msg, args) {
                 var { CloudKicker } = require("cloudkicker");
                 var request = require("request");
                 const cloudkicker = new CloudKicker();
-                const index = await cloudkicker.get("https://spigotmc.org");
-                const options: request.Options = {
-                  encoding: "utf-8",
-                  jar: cloudkicker.cookieJar,
-                  method: "GET",
-                  url: `https://spigotmc.org/${url}`,
-                };
-                request(options).pipe(fs.createWriteStream(`/srv/daemon-data/${server.uuid}/plugins`));
-                ms.edit(`${options[r.emoji.name].name} has been installed!`)
+                cloudkicker.get("https://spigotmc.org").then(index => {
+                  const options: request.Options = {
+                    encoding: "utf-8",
+                    jar: cloudkicker.cookieJar,
+                    method: "GET",
+                    url: `https://spigotmc.org/${url}`,
+                  };
+                  request(options).pipe(fs.createWriteStream(`/srv/daemon-data/${server.uuid}/plugins`));
+                  ms.edit(`${options[r.emoji.name].name} has been installed!`)
+                });
                 });
               } else {
                 ms.edit("Invalid Plugin Selection")
