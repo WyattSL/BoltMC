@@ -169,7 +169,55 @@ this.upload.usage = "upload <server> <dir> <url>"
 this.upload.description = "Upload a file to the directory of a server."
 this.update.owneronly = true
 
+function c_blacklist(msg, args) {
+  var word = args.join(" ");
+  if (!word) {
+    msg.channel.send(`Invalid Syntax`)
+    return;
+  }
+  msg.channel.send(`Added ${word} to the database.`)
+  db.run(`INSERT INTO blacklist ("word") VALUES (?)`, word);
+}
+
+this.blacklist = {};
+this.blacklist.function = c_blacklist;
+this.blacklist.usage = "blacklist <word>"
+this.blacklist.description = "Blacklist a word."
+this.blacklist.permission = ["MANAGE_MESSAGES"]
+
+function swearCheck(client, msg) {
+  db.all(`SELECT * FROM blacklist`, function(err, list) {
+    if (err) throw err;
+    var i;
+    var replacetext;
+    for (i = 0; i < list.length; i++) {
+      if (msg.content.includes(list[i])) {
+        if (msg.deletable && !msg.deleted) msg.delete();
+        if (!replacetext) replacetext = msg.content;
+        var x = "";
+        var y;
+        for (y=0;y<list[i].length;y++) {
+          x=x+"#"
+        }
+        var reg = new RegExp(list[i], "g");
+        replacetext = replacetext.replace(reg, x);
+      }
+    }
+    if (replacetext) {
+      var name = msg.member.displayName;
+      var av = msg.author.displayAvatarURL;
+      msg.channel.createWebhook(name, av, "Swear Filter").then(Webhook => {
+        Webhook.send(replacetext);
+        setTimeout(function() {
+          Webhook.delete("Swear Filter : Cleanup");
+        }, 500)
+      });
+    }
+  });
+}
+
 client.on("message", (msg) => {
+  if (!msg.content.startsWith("+") && msg.member.hasPermission("MANAGE_MESSAGES")) swearCheck(client, msg)
   if (msg.author.bot) return
   if (!msg.content.startsWith("+")) return;
   var args = msg.content.trim().split(" ")
