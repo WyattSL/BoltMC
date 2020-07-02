@@ -107,6 +107,12 @@ client.on("message", (msg) => {
   }
 });
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}   
+
 
 setInterval(async => { // 🟢 🔴 🟡 🟤 ❓
   app.getAllServers().then(servers => {
@@ -118,6 +124,9 @@ setInterval(async => { // 🟢 🔴 🟡 🟤 ❓
       panel.getServerStatus(id).then(status => {
         statuses[name] = status;
       });
+      (async () =>
+        await sleep(500)
+      )
     }
     var Bungee = client.guilds.first().channels.find(ch => ch.id == 728016432192946236)
     if (statuses["BungeeCord"] == "on") {
