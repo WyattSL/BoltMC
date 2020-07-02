@@ -190,7 +190,7 @@ function c_start(msg, args) {
         return;
       } else {
         msg.channel.send(`Starting ${args[0]}...`);
-        client.startServer(server.attributes.identifier)
+        panel.startServer(server.attributes.identifier)
       }
     });
   });
@@ -294,7 +294,7 @@ function updateStatus(id, name) {
     if (status == "on") { // 『 』
       channel.setName(`『🟢』 ${name}`)
     } else if (status == "off") {
-      channel.setName(`『🟢』🔴 ${name}`)
+      channel.setName(`『🔴』 ${name}`)
     } else if (status == "starting") {
       channel.setName(`『🟡』 ${name}`)
     } else if (status == "stopping") {
