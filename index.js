@@ -221,6 +221,30 @@ function c_install(msg, args) {
           if (!options[reactions[i]]) break;
           ms.react(reactions[i])
         }
+        const filter = (reaction, user) => reactions[reaction.emoji.name]
+        const collector = message.createReactionCollector(filter, { time: 15000 });
+        collector.on('collect', r => {
+          if (r.user == msg.author) {
+            ms.clearReactions()
+            collector.end()
+            if (options[r.emoji.name]) {
+              ms.edit("Please wait...");
+              var url = options[r.emoji.name].file.url;
+              shell.exec(`wget -P /srv/daemon-data/${server.uuid}/plugins/ ${url}`);
+              ms.edit(`${options[r.emoji.name].name} has been installed!`)
+            } else {
+              ms.edit("Invalid Plugin Selection")
+            }
+          } else {
+            r.remove(r.user);
+          }
+        });
+        collector.on('end', collected => {
+          if (collected < 1) {
+            ms.clearReactions();
+            ms.edit("You did not react in time.");
+          }
+        });
       });
     });
   });
