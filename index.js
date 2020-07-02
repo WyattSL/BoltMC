@@ -108,18 +108,29 @@ client.on("message", (msg) => {
 });
 
 
-setInterval(function() { // 🔴
+setInterval(function() { // 🟢 🔴 🟡 🟤 ❓
   app.getAllServers().then(servers => {
     var statuses = {}
     var i;
     for (i=0;i<servers.length;i++) {
       panel.getServerStatus(servers[i].attributes.identifier).then(status => {
-        console.log(status)
+        statuses[servers[i].attributes.name]
       });
     }
     var Bungee = client.guilds.first().channels.find(ch => ch.id == 728016432192946236)
+    if (statuses["BungeeCord"] == "on") {
+      Bungee.setName("🟢 Proxy 🟢")
+    } else if (statuses["BungeeCord"] == "off") {
+      Bungee.setName("🔴 Proxy 🔴")
+    } else if (statuses["BungeeCord"] == "starting") {
+      Bungee.setName("🟡 Proxy 🟡")
+    } else if (statuses["BungeeCord"] == "stopping") {
+      Bungee.setName("🟤 Proxy 🟤")
+    } else {
+      Bungee.setName("❓ Proxy ❓")
+    }
   });
-}, 10000);
+}, 20500);
 
 
 client.login(require("./TOKEN.json").TOKEN);
