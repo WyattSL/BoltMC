@@ -7,6 +7,7 @@ const bp = require("body-parser")
 const w = express()
 const fs = require("fs")
 const os = require("os");
+const applys = require("./apply.js"); // start the applybot
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("data.db")
 
