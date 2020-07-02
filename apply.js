@@ -31,8 +31,9 @@ app.get("/submitapply", (req, res) => {
   var q4 = q["q4"];
   var q5 = q["q5"];
   var q6 = q["q6"];
-  var resp = this.sendApplication(user, age, q2, q3, q4, q5, q6);
-  res.end(resp.toString());
+  this.sendApplication(user, age, q2, q3, q4, q5, q6).then(resp => {
+    res.end(resp.toString());
+  }
 });
 
 client.on("ready", () => {
@@ -106,7 +107,7 @@ client.on("message", msg => {
   args.shift(); // remove the command
   if (msg.content.startsWith("accept")) {
     msg.delete();
-    var id = args.shift();
+    var id = `${args.shift()}`
     if (!id) {
       msg.channel
         .send(`Usage\naccept <id> <role:name>\ndeny <id> <reason>`)
@@ -181,7 +182,7 @@ client.on("message", msg => {
     });
   } else if (msg.content.startsWith("deny")) {
     msg.delete();
-    var id = Number(args.shift());
+    var id = `${args.shift()}`;
     var reason = args.join(" ");
     if (!id || !reason) {
       msg.channel
