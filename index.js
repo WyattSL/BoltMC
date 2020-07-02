@@ -102,7 +102,7 @@ function c_upload(msg, args) {
       server=server[0].attributes;
     }
     if (!dir.startsWith("/")) dir = "/"+dir;
-    var target = `/srv/daemon/${server.uuid}${dir}`
+    var target = `/srv/daemon-data/${server.uuid}${dir}`
     var o = shell.exec(`wget -P ${target} ${url}`)
     var x = "``";
     msg.channel.send(`Downloading ${x}${url}${x} to ${x}${target}${x}.`)
