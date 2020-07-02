@@ -27,6 +27,7 @@ w.post("/players", (req, res) => {
     for (i=0;i<p.length;i++) {
       db.run(`INSERT INTO players ("server", "player") VALUES (@0, @1)`, req.query.server, p[i]);
     }
+    res.sendStatus(200)
   } else {
     res.status(400).end("server or players invalid")
   }
