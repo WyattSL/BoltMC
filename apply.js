@@ -3,8 +3,10 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const { RichEmbed } = require("discord.js");
+const sqlite3 = require("sqlite3").verbose();
+const db = new sqlite3.Database("data.db")
 
-const db = require("./sql.js").db;
+db.serialize();
 
 client.on("ready", () => {
   console.log(`[APPLY BOT] Ready; logged in as ${client.user.tag}!`);
@@ -16,9 +18,9 @@ client.on("ready", () => {
     }
   });
   client.owner = client.users.find(u => u.id == 270035320894914560);
-  client.pending = client.channels.find(ch => ch.id == process.env.PENDING);
-  client.accepted = client.channels.find(ch => ch.id == process.env.ACCEPTED);
-  client.denied = client.channels.find(ch => ch.id == process.env.DENIED);
+  client.pending = client.channels.find(ch => ch.id == 728268088671207426);
+  client.accepted = client.channels.find(ch => ch.id == 728268104723070987);
+  client.denied = client.channels.find(ch => ch.id == 728268115984777227);
 });
 
 // return codes
