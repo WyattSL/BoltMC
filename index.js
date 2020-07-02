@@ -89,13 +89,13 @@ function c_upload(msg, args) {
   if (!name || !dir || !url) { msg.channel.send("Incorrect Usage"); return; }
   app.getAllServers().then(servers => {
     var server = servers.filter(function(s) {
-      if (s == name) {
+      if (s.attributes.name == name) {
         return true
       } else {
         return false
       }
     })
-    if (!server) {
+    if (!server[0]) {
       msg.channel.send(`Failed to find server: ${name}`)
       return
     } else {
