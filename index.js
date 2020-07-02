@@ -270,9 +270,9 @@ client.on("message", (msg) => {
         }
       }
     }
-    if (this[cmd].roles && this[cmd].roles[0]) {
+    if (this[cmd].role && this[cmd].role) {
       var i;
-      var role = client.guilds.first().roles.find(r => r.name.includes(this[cmd].roles));
+      var role = client.guilds.first().roles.find(r => r.name.includes(this[cmd].role));
       if (role.position > msg.member.highestRole.position) {
           msg.channel.send("You do not have the required roles to use this command.")
           return;
@@ -281,7 +281,7 @@ client.on("message", (msg) => {
     console.log(`Executing ${cmd} [${args}] by @${msg.author.tag} in #${msg.channel.name}`);
     this[cmd].function(msg, args);
   } else {
-    msg.react(":x:");
+    msg.react("x");
   }
 });
 
