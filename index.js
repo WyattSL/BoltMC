@@ -1,5 +1,6 @@
 const Discord = require("discord.js")
 const client = new Discord.Client()
+const { RichEmbed } = require("discord.js");
 const shell = require("shelljs")
 const nodeactyl = require("nodeactyl")
 const express = require("express")
@@ -8,6 +9,7 @@ const w = express()
 const fs = require("fs")
 const os = require("os");
 const applys = require("./apply.js"); // start the applybot
+const got = require("got")
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("data.db")
 
@@ -72,6 +74,7 @@ function c_dball(msg, args) {
       msg.channel.send(`Execution error: ${x}\nfix${err}${x}`);
     } else {
       if (rows && rows[0]) {
+        var x = "```";
         msg.channel.send(`${x}json\n${JSON.stringify(rows)}${x}`);
       } else {
         msg.channel.send(`No results.`)
@@ -169,7 +172,63 @@ this.upload = {}
 this.upload.function = c_upload
 this.upload.usage = "upload <server> <dir> <url>"
 this.upload.description = "Upload a file to the directory of a server."
-this.update.owneronly = true
+this.upload.owneronly = true
+
+function c_install(msg, args) {
+  var name = args.shift();
+  var plugin = args.join(" ");
+  if (!name || !plugin) { msg.channel.send(`Incorrect Usage`); return; }
+  app.getAllServers().then(servers => {
+    var server = servers.filter(function(s) {
+      if (s.attributes.name == name) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    if (!server[0]) {
+      msg.channel.send(`Failed to find server: ${name}`)
+      return
+    } else {
+      server=server[0].attributes
+    }
+    got(`https://api.spiget.org/v2/search/resources/${plugin}?field=name&size=30&page=1`).then(req => {
+      var res = JSON.parse(req.body);
+      var plugins = res.sort(function(a, b) {
+        return a.downloads-b.downloads
+      });
+      var e = new RichEmbed;
+      e.setTitle("Spigot Plugin Listing")
+      e.setDescription("Please select which plugin you want to install.");
+      var options = {};
+      var reactions = [
+        "1️⃣", // 1
+        "2️⃣", // 2
+        "3️⃣", // 3
+        "4️⃣", // 4
+        "5️⃣" // 5
+      ]
+      for (i=0;i<4;i++) { // displays 5, 0 is considered the first.
+        var p = plugins[i];
+        if (!p) break;
+        embed.addField(`[${i+1}] ${p.name}`, `${p.description}`);
+        options[reactions[i]] = p;
+      }
+      embed.setFooter("Bot courtesy of WyattL#3477");
+      msg.channel.send(embed).then(ms => {
+        var i;
+        for (i=0;i<options.length;i++) {
+          ms.react(reactions[i])
+        }
+      });
+    });
+});
+  
+this.install = {};
+this.install.function = c_install;
+this.install.usage = "install <server> <plugin>"
+this.install.description = "Install a plugin onto a server."
+this.install.owneronly = true
 
 function c_start(msg, args) {
   app.getAllServers().then(servers => {
