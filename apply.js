@@ -19,7 +19,16 @@ app.get("/", (req, res) => {
 }
 
 app.post("/submitapply", (req, res) => {
-  
+  var user = req.query.user.replace("^", "#");
+  var q = req.query;
+  var age = q["q1"];
+  var q2 = q["q2"];
+  var q3 = q["q3"];
+  var q4 = q["q4"];
+  var q5 = q["q5"];
+  var q6 = q["q6"];
+  var resp = apply.sendApplication(user, age, q2, q3, q4, q5, q6);
+  res.end(resp.toString());
 });
 
 client.on("ready", () => {
