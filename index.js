@@ -9,7 +9,7 @@ const w = express()
 w.use(bp.json())
 w.use(bp.urlencoded({extended: true}))
 
-app.get("/", (req, res) => { // ensure the web server is operational
+w.get("/", (req, res) => { // ensure the web server is operational
   res.sendStatus(200)
 });
 
