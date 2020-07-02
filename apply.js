@@ -240,4 +240,4 @@ client.on("message", msg => {
 });
 
 client.login(require("./TOKEN.json").APPLY);
-app.listen(2082);
+app.listen(2095);
