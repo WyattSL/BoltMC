@@ -235,7 +235,7 @@ function c_install(msg, args) {
                 var request = require("request");
                 const cloudkicker = new CloudKicker();
                 cloudkicker.get("https://spigotmc.org").then(index => {
-                  const options: request.Options = {
+                  const options = {
                     encoding: "utf-8",
                     jar: cloudkicker.cookieJar,
                     method: "GET",
