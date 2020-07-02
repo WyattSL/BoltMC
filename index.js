@@ -191,23 +191,18 @@ function swearCheck(client, msg) {
     var i;
     var replacetext;
     for (i = 0; i < list.length; i++) {
-      console.log(list);
-      console.log(list[i]);
-      msg.channel.send(`Attempting to match: ${list[i]} in ${list}`);
-      if (msg.content.includes(list[i])) {
-        msg.channel.send(`Matched: ${list[i]} in ${msg.content}`);
+      if (msg.content.includes(list[i].word)) {
         if (msg.deletable && !msg.deleted) msg.delete();
         if (!replacetext) replacetext = msg.content;
         var x = "";
         var y;
-        for (y=0;y<list[i].length;y++) {
+        for (y=0;y<list[i].word.length;y++) {
           x=x+"#"
         }
         var reg = new RegExp(list[i], "g");
         replacetext = replacetext.replace(reg, x);
       }
     }
-    msg.channel.send(`Replace: ${replacetext}`)
     if (replacetext) {
       var name = msg.member.displayName;
       var av = msg.author.displayAvatarURL;
