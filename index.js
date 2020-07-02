@@ -244,7 +244,6 @@ function c_install(msg, args) {
                   request(options).pipe(fs.createWriteStream(`/srv/daemon-data/${server.uuid}/plugins`));
                   ms.edit(`${options[r.emoji.name].name} has been installed!`)
                 });
-                });
               } else {
                 ms.edit("Invalid Plugin Selection")
               }
