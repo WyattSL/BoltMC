@@ -281,7 +281,8 @@ client.on("message", (msg) => {
     console.log(`Executing ${cmd} [${args}] by @${msg.author.tag} in #${msg.channel.name}`);
     this[cmd].function(msg, args);
   } else {
-    msg.react("x");
+    msg.react("❌");
+    console.log(`Command ${cmd} [${args}] by @${msg.author.tag} in #${msg.channel.name} not found!`);
   }
 });
 
