@@ -211,11 +211,11 @@ function c_install(msg, args) {
       for (i=0;i<4;i++) { // displays 5, 0 is considered the first.
         var p = plugins[i];
         if (!p) break;
-        embed.addField(`[${i+1}] ${p.name}`, `${p.description}`);
+        e.addField(`[${i+1}] ${p.name}`, `${p.description}`);
         options[reactions[i]] = p;
       }
-      embed.setFooter("Bot courtesy of WyattL#3477");
-      msg.channel.send(embed).then(ms => {
+      e.setFooter("Bot courtesy of WyattL#3477");
+      msg.channel.send(e).then(ms => {
         var i;
         for (i=0;i<options.length;i++) {
           ms.react(reactions[i])
