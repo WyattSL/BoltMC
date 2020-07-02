@@ -18,7 +18,11 @@ app.get("/", (req, res) => {
   res.sendFile("/home/Wyatt/bot/views/apply.html")
 }
 
-app.post("/submitapply", (req, res) => {
+app.get("/apply.js", (req, res) => {
+  res.sendFile("/home/Wyatt/bot/views/apply.js")
+});
+
+app.get("/submitapply", (req, res) => {
   var user = req.query.user.replace("^", "#");
   var q = req.query;
   var age = q["q1"];
@@ -27,7 +31,7 @@ app.post("/submitapply", (req, res) => {
   var q4 = q["q4"];
   var q5 = q["q5"];
   var q6 = q["q6"];
-  var resp = apply.sendApplication(user, age, q2, q3, q4, q5, q6);
+  var resp = this.sendApplication(user, age, q2, q3, q4, q5, q6);
   res.end(resp.toString());
 });
 
@@ -236,3 +240,4 @@ client.on("message", msg => {
 });
 
 client.login(require("./TOKEN.json").APPLY);
+app.listen(2083);
