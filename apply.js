@@ -16,7 +16,7 @@ app.use(bp.urlencoded({extended: true}));
 
 app.get("/", (req, res) => {
   res.sendFile("/home/Wyatt/bot/views/apply.html")
-}
+});
 
 app.get("/apply.js", (req, res) => {
   res.sendFile("/home/Wyatt/bot/views/apply.js")
