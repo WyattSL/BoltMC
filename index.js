@@ -231,9 +231,8 @@ function c_install(msg, args) {
               if (options[r.emoji.name]) {
                 ms.edit("Please wait...");
                 var url = options[r.emoji.name].file.url;
-                import { CloudKicker } from "cloudkicker";
-                import * as request from "request";
-                import * as fs from "fs";
+                var { CloudKicker } = require("cloudkicker");
+                var request = require("request");
                 const cloudkicker = new CloudKicker();
                 const index = await cloudkicker.get("https://spigotmc.org");
                 const options: request.Options = {
