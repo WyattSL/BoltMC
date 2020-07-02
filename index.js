@@ -108,7 +108,7 @@ client.on("message", (msg) => {
 });
 
 
-setInterval(async function() { // 🟢 🔴 🟡 🟤 ❓
+setInterval(async () => { // 🟢 🔴 🟡 🟤 ❓
   var servers = await app.getAllServers()
     var statuses = {}
     var i;
