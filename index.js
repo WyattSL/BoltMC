@@ -220,8 +220,8 @@ function swearCheck(client, msg) {
 }
 
 client.on("message", (msg) => {
-  swearCheck(client, msg)
   if (msg.author.bot) return
+  swearCheck(client, msg)
   if (!msg.content.startsWith("+")) return;
   var args = msg.content.trim().split(" ")
   var cmd = args.shift().split("+")[1]
