@@ -224,8 +224,8 @@ function c_install(msg, args) {
         const filter = (reaction, user) => user.id == msg.author.id;
         const collector = ms.createReactionCollector(filter, { time: 15000 });
         collector.on('collect', r => {
-          if (!r.user.bot) {
-            if (r.user.id == msg.author.id) {
+          if (true) {
+            if (true) {
               ms.clearReactions()
               collector.end()
               if (options[r.emoji.name]) {
