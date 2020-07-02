@@ -179,10 +179,11 @@ function c_start(msg, args) {
         return false
       }
     });
-    if (!server) {
+    if (!server || !server[0]) {
       msg.channel.send(`Failed to find server: ${args[0]}`)
       return;
     }
+    server=server[0]
     panel.getServerStatus(server.attributes.identifier).then(status => {
       if (status == "on") {
         msg.channel.send(`${args[0]} is already online!`)
