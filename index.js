@@ -107,27 +107,31 @@ client.on("message", (msg) => {
   }
 });
 
-setInterval(async => { // 🟢 🔴 🟡 🟤 ❓
+function updateStatus(id, name) {
+  if (name == "BungeeCord") name = "Proxy"
+  var channel = client.guilds.first().channels.find(ch => ch.name == name.split(" ")[1].split(" "))
+  panel.getServerStatus(id).then(status => {
+    if (status == "on") {
+      channel.setName(`🟢 ${name} 🟢`)
+    } else if (status == "off") {
+      channel.setName(`🔴 ${name} 🔴`)
+    } else if (status == "starting") {
+      channel.setName(`🟡 ${name} 🟡`)
+    } else if (status == "stopping") {
+      channel.setName(`🟤 ${name} 🟤`)
+    } else {
+      channel.setName(`❓ ${name} ❓`)
+    }
+  });
+}
+
+setInterval(function() // 🟢 🔴 🟡 🟤 ❓
   app.getAllServers().then(servers => {
-    var statuses = {}
     var i;
     for (i=0;i<servers.length;i++) {
       let id = servers[i].attributes.identifier;
       let name = servers[i].attributes.name;
-      var status = await panel.getServerStatus(id)
-      statuses[name] = status
-    }
-    var Bungee = client.guilds.first().channels.find(ch => ch.id == 728016432192946236)
-    if (statuses["BungeeCord"] == "on") {
-      Bungee.setName("🟢 Proxy 🟢")
-    } else if (statuses["BungeeCord"] == "off") {
-      Bungee.setName("🔴 Proxy 🔴")
-    } else if (statuses["BungeeCord"] == "starting") {
-      Bungee.setName("🟡 Proxy 🟡")
-    } else if (statuses["BungeeCord"] == "stopping") {
-      Bungee.setName("🟤 Proxy 🟤")
-    } else {
-      Bungee.setName("❓ Proxy ❓")
+      updateStatus(id, name)
     }
   });
 }, 20500);
