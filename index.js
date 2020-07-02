@@ -231,6 +231,7 @@ function c_install(msg, args) {
               if (options[r.emoji.name]) {
                 ms.edit("Please wait...");
                 var url = options[r.emoji.name].file.url;
+                var name = options[r.emoji.name].name;
                 var { CloudKicker } = require("cloudkicker");
                 var request = require("request");
                 const cloudkicker = new CloudKicker();
@@ -241,7 +242,7 @@ function c_install(msg, args) {
                     method: "GET",
                     url: `https://spigotmc.org/${url}`,
                   };
-                  request(options).pipe(fs.createWriteStream(`/srv/daemon-data/${server.uuid}/plugins/${options[r.emoji.name].name}.jar`));
+                  request(options).pipe(fs.createWriteStream(`/srv/daemon-data/${server.uuid}/plugins/${name}.jar`));
                   ms.edit(`${options[r.emoji.name].name} has been installed!`)
                 });
               } else {
