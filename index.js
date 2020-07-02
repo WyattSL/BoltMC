@@ -114,7 +114,7 @@ setInterval(function() { // 🟢 🔴 🟡 🟤 ❓
     var i;
     for (i=0;i<servers.length;i++) {
       panel.getServerStatus(servers[i].attributes.identifier).then(status => {
-        statuses[servers[i].attributes.name]
+        statuses[servers[i].attributes.name] = status;
       });
     }
     var Bungee = client.guilds.first().channels.find(ch => ch.id == 728016432192946236)
