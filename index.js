@@ -218,6 +218,7 @@ function c_install(msg, args) {
       msg.channel.send(e).then(ms => {
         var i;
         for (i=0;i<reactions.length;i++) {
+          if (!options[reactions[i]]]) break;
           ms.react(reactions[i])
         }
       });
