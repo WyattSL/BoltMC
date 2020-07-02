@@ -109,17 +109,13 @@ client.on("message", (msg) => {
 
 
 setInterval(function() { // 🟢 🔴 🟡 🟤 ❓
-  app.getAllServers().then(servers => {
+  app.getAllServers().then(async servers => {
     var statuses = {}
     var i;
     for (i=0;i<servers.length;i++) {
       var id = servers[i].attributes.identifier;
       var name = servers[i].attributes.name;
-      console.log(id)
-      console.log(name)
-      panel.getServerStatus(id).then(status => {
-        console.log(name)
-        console.log(status)
+      await panel.getServerStatus(id).then(status => {
         statuses[name] = status;
       });
     }
