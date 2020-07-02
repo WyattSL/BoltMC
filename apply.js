@@ -12,7 +12,7 @@ db.serialize();
 
 const app = express();
 app.use(bp.json())
-app.use(bp.urlencoded({extended: true});
+app.use(bp.urlencoded({extended: true}));
 
 app.get("/", (req, res) => {
   res.sendFile("/home/Wyatt/bot/views/apply.html")
