@@ -83,14 +83,20 @@ this.update.description = "Update the bot to the latest release on github."
 this.update.owneronly = true
 
 function c_upload(msg, args) {
-  var server = args[1]
-  var dir = args[2]
-  var url = args[3];
-  if (!server || !dir || !url) { msg.channel.send("Incorrect Usage"); return; }
+  var name = args[0]
+  var dir = args[1]
+  var url = args[2];
+  if (!name || !dir || !url) { msg.channel.send("Incorrect Usage"); return; }
   app.getAllServers().then(servers => {
-    var server = servers.filter(s => s.attributes.name == server)
+    var server = servers.filter(function(s) {
+      if (s == name) {
+        return true
+      } else {
+        return false
+      }
+    })
     if (!server) {
-      msg.channel.send(`Failed to find server: ${server}`)
+      msg.channel.send(`Failed to find server: ${name}`)
       return
     } else {
       server=server[0].attributes;
