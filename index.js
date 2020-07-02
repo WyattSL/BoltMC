@@ -221,11 +221,11 @@ function c_install(msg, args) {
           if (!options[reactions[i]]) break;
           ms.react(reactions[i])
         }
-        const filter = (reaction, user) => true;
+        const filter = (reaction, user) => user.id == msg.author.id;
         const collector = ms.createReactionCollector(filter, { time: 15000 });
         collector.on('collect', r => {
           if (!r.user.bot) {
-            if (r.user == msg.author) {
+            if (r.user.id == msg.author.id) {
               ms.clearReactions()
               collector.end()
               if (options[r.emoji.name]) {
