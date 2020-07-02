@@ -115,7 +115,11 @@ setInterval(function() { // 🟢 🔴 🟡 🟤 ❓
     for (i=0;i<servers.length;i++) {
       var id = servers[i].attributes.identifier;
       var name = servers[i].attributes.name;
+      console.log(id)
+      console.log(name)
       panel.getServerStatus(id).then(status => {
+        console.log(name)
+        console.log(status)
         statuses[name] = status;
       });
     }
