@@ -2,6 +2,16 @@ const Discord = require("discord.js")
 const client = new Discord.Client()
 const shell = require("shelljs")
 const nodeactyl = require("nodeactyl")
+const express = require("express")
+const bp = require("body-parser")
+const w = express()
+
+w.use(bp.json())
+w.use(bp.urlencoded({extended: true}))
+
+app.get("/", (req, res) => { // ensure the web server is operational
+  res.sendStatus(200)
+});
 
 client.on("ready", () => {
   console.log("Bot Ready")
@@ -187,3 +197,5 @@ panel.login('https://panel.boltmc.net', require("./TOKEN.json").PANEL, (ready, m
     console.log("Nodeactyl Client ready!")
   }
 });
+
+w.listen(3000)
