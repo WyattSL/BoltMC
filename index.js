@@ -202,16 +202,16 @@ function c_install(msg, args) {
       e.setDescription("Please select which plugin you want to install.");
       var options = {};
       var reactions = [
-        "1️⃣", // 1
-        "2️⃣", // 2
-        "3️⃣", // 3
-        "4️⃣", // 4
-        "5️⃣" // 5
+        "🟣", // 1
+        "🔵", // 2
+        "🟢", // 3
+        "🔴", // 4
+        "🟡" // 5
       ]
       for (i=0;i<5;i++) {
         var p = plugins[i];
         if (!p) break;
-        e.addField(`[${i+1}] ${p.name}`, `${p.tag}`);
+        e.addField(`[${reactions[i]}] ${p.name}`, `${p.tag}`);
         options[reactions[i]] = p;
       }
       e.setFooter("Bot courtesy of WyattL#3477");
@@ -221,7 +221,7 @@ function c_install(msg, args) {
           if (!options[reactions[i]]) break;
           ms.react(reactions[i])
         }
-        const filter = (reaction, user) => options[reaction.name]
+        const filter = (reaction, user) => return true;
         const collector = ms.createReactionCollector(filter, { time: 15000 });
         collector.on('collect', r => {
           if (r.user == msg.author) {
