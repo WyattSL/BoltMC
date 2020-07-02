@@ -222,6 +222,7 @@ function c_install(msg, args) {
         }
       });
     });
+  }):
 };
   
 this.install = {};
