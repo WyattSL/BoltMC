@@ -241,7 +241,7 @@ function c_install(msg, args) {
                     method: "GET",
                     url: `https://spigotmc.org/${url}`,
                   };
-                  request(options).pipe(fs.createWriteStream(`/srv/daemon-data/${server.uuid}/plugins`));
+                  request(options).pipe(fs.createWriteStream(`/srv/daemon-data/${server.uuid}/plugins/${options[r.emoji.name].name}.jar`));
                   ms.edit(`${options[r.emoji.name].name} has been installed!`)
                 });
               } else {
