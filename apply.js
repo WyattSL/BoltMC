@@ -3,10 +3,24 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const { RichEmbed } = require("discord.js");
+const express = require("express");
+const bp = require("body-parser")
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("data.db")
 
 db.serialize();
+
+const app = express();
+app.use(bp.json())
+app.use(bp.urlencoded({extended: true});
+
+app.get("/", (req, res) => {
+  res.sendFile("/home/Wyatt/bot/views/apply.html")
+}
+
+app.post("/submitapply", (req, res) => {
+  
+});
 
 client.on("ready", () => {
   console.log(`[APPLY BOT] Ready; logged in as ${client.user.tag}!`);
