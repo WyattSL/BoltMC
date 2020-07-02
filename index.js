@@ -171,9 +171,7 @@ this.upload.description = "Upload a file to the directory of a server."
 this.update.owneronly = true
 
 function c_start(msg, args) {
-  msg.reply("s1")
   app.getAllServers().then(servers => {
-    msg.reply("s2: " + JSON.stringify(servers));
     var server = servers.filter(function(s) {
       if (s.attributes.name == args[0]) {
         return true
@@ -181,15 +179,12 @@ function c_start(msg, args) {
         return false
       }
     });
-    msg.reply("s3: " + server)
     if (!server || !server[0]) {
       msg.channel.send(`Failed to find server: ${args[0]}`)
       return;
     }
     server=server[0]
-    msg.reply("s4: " + server[0])
     panel.getServerStatus(server.attributes.identifier).then(status => {
-      msg.reply("s5: " + status)
       if (status == "on") {
         msg.channel.send(`${args[0]} is already online!`)
         return;
