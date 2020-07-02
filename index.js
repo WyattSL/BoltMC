@@ -125,7 +125,7 @@ function updateStatus(id, name) {
   });
 }
 
-setInterval(function() // 🟢 🔴 🟡 🟤 ❓
+setInterval(function() { // 🟢 🔴 🟡 🟤 ❓
   app.getAllServers().then(servers => {
     var i;
     for (i=0;i<servers.length;i++) {
