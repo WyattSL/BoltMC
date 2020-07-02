@@ -278,7 +278,10 @@ client.on("message", (msg) => {
           return;
       };
     };
+    console.log(`Executing ${cmd} [${args}] by @${msg.author.tag} in #${msg.channel.name}`);
     this[cmd].function(msg, args);
+  } else {
+    msg.react(":x:");
   }
 });
 
