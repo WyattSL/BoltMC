@@ -5,6 +5,12 @@ const nodeactyl = require("nodeactyl")
 const express = require("express")
 const bp = require("body-parser")
 const w = express()
+const fs = require("fs")
+const os = require("os");
+const sqlite3 = require("sqlite3").verbose();
+const db = new sqlite3.Database("data.db")
+
+db.serialize();
 
 w.use(bp.json())
 w.use(bp.urlencoded({extended: true}))
