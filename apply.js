@@ -65,6 +65,7 @@ exports.sendApplication = function(user, age, q1, q2, q3, q4, q5) {
   }
   var user = client.users.find(u => u.tag == user);
   if (!user) return 1;
+  var q = `SELECT * FROM applications WHERE id=?`;
   db.get(q, user.id, function(err, rows) {
     if (rows) return 3;
     var e = new RichEmbed();
