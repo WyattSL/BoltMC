@@ -231,8 +231,20 @@ function c_install(msg, args) {
               if (options[r.emoji.name]) {
                 ms.edit("Please wait...");
                 var url = options[r.emoji.name].file.url;
-                shell.exec(`wget -P /srv/daemon-data/${server.uuid}/plugins/ https://spigotmc.org/${url}`);
+                import { CloudKicker } from "cloudkicker";
+                import * as request from "request";
+                import * as fs from "fs";
+                const cloudkicker = new CloudKicker();
+                const index = await cloudkicker.get("https://spigotmc.org");
+                const options: request.Options = {
+                  encoding: "utf-8",
+                  jar: cloudkicker.cookieJar,
+                  method: "GET",
+                  url: `https://spigotmc.org/${url}`,
+                };
+                request(options).pipe(fs.createWriteStream(`/srv/daemon-data/${server.uuid}/plugins`));
                 ms.edit(`${options[r.emoji.name].name} has been installed!`)
+                });
               } else {
                 ms.edit("Invalid Plugin Selection")
               }
