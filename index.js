@@ -243,7 +243,7 @@ function c_install(msg, args) {
                     url: `https://spigotmc.org/${url}`,
                   };
                   request(options).pipe(fs.createWriteStream(`/srv/daemon-data/${server.uuid}/plugins/${name}.jar`));
-                  ms.edit(`${options[r.emoji.name].name} has been installed!`)
+                  ms.edit(`${name} has been installed!`)
                 });
               } else {
                 ms.edit("Invalid Plugin Selection")
