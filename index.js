@@ -196,7 +196,7 @@ client.on("message", (msg) => {
 
 function updateStatus(id, name) {
   if (name == "BungeeCord") name = "Proxy"
-  var channel = client.guilds.first().channels.find(ch => ch && ch.name && (ch.name.split("』")[1] && ch.name.split("』 ")[1].split(" 『")[0] == name ) || ch.name == name)
+  var channel = client.guilds.first().channels.find(ch => ch && ch.name && (ch.name.split("』 ")[1] && ch.name.split("』 ")[1].split(" 『")[0] == name ) || ch.name == name)
   panel.getServerStatus(id).then(status => {
     if (status == "on") { // 『 』
       channel.setName(`『🟢』 ${name} 『🟢』`)
