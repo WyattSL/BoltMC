@@ -227,7 +227,7 @@ function c_install(msg, args) {
           if (true) {
             if (true) {
               ms.clearReactions()
-              collector.end()
+              collector.stop()
               if (options[r.emoji.name]) {
                 ms.edit("Please wait...");
                 var url = options[r.emoji.name].file.url;
