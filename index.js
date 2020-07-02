@@ -20,11 +20,12 @@ w.get("/", (req, res) => { // ensure the web server is operational
 });
 
 w.post("/players", (req, res) => {
-  if (req.query.server && req.body) { // req.body should be 1 big array
+  if (req.query.server && req.body.players) {
     db.run(`DELETE FROM players WHERE server=?`, req.query.server);
     var i;
-    for (i=0;i<req.body.length;i++) {
-      db.run(`INSERT INTO players ("server", "player") VALUES (@0, @1)`, req.query.server, req.body[i]);
+    var p = JSON.parse(req.body.players)
+    for (i=0;i<p.length;i++) {
+      db.run(`INSERT INTO players ("server", "player") VALUES (@0, @1)`, req.query.server, p[i]);
     }
   } else {
     res.status(400).end("server or players invalid")
