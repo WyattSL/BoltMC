@@ -172,7 +172,7 @@ this.update.owneronly = true
 
 function c_start(msg, args) {
   msg.reply("s1")
-  app.getAllServers(servers => {
+  app.getAllServers().(servers => {
     msg.reply("s2: " + JSON.stringify(servers));
     var server = servers.filter(function(s) {
       if (s.attributes.name == args[0]) {
