@@ -102,11 +102,10 @@ function c_upload(msg, args) {
       server=server[0].attributes;
     }
     if (!dir.startsWith("/")) dir = "/"+dir;
-    shell.exec(`cd /srv/daemon/${server.id}${dir}`);
+    shell.exec(`cd /srv/daemon/${server.uuid}${dir}`);
     var o = shell.exec(`wget ${url}`).stdout;
-    var x = "```";
-    msg.channel.send(`Downloading ${url} to /srv/daemon/${server.id}${dir}.`)
-    msg.channel.send(`Download Logs: ${x}${o}${x}`);
+    var x = "``";
+    msg.channel.send(`Downloading ${x}${url}${x} to ${x}/srv/daemon/${server.uuidid}${dir}${x}.`)
   });
 }
 
