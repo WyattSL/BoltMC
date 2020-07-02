@@ -122,12 +122,13 @@ this.exec.owneronly = true
 this.exec.description = "Execute a shell command."
 
 function c_update(msg, args) {
-  msg.channel.send(`Pulling files from github...`);
-  shell.exec("git pull Github")
-  setTimeout(function() {
-    msg.channel.send(`Restarting...`);
-    process.exit(0)
-  }, 2500);
+  msg.channel.send(`Pulling files from github...`).then(ms => {
+    shell.exec("git pull Github")
+    ms.edit("Restarting...");
+    setTimeout(function() {
+      process.exit(0)
+    }, 2500);
+  });
 }
 
 this.update = {}
@@ -168,6 +169,37 @@ this.upload.function = c_upload
 this.upload.usage = "upload <server> <dir> <url>"
 this.upload.description = "Upload a file to the directory of a server."
 this.update.owneronly = true
+
+function c_start(msg, args) {
+  app.getAllServers(servers => {
+    var server = servers.filter(function(s) {
+      if (s.name == args[0]) {
+        return true
+      } else {
+        return false
+      }
+    });
+    if (!server) {
+      msg.channel.send(`Failed to find server: ${s.name}`)
+      return;
+    }
+    panel.getServerStatus(server.identifier).then(status => {
+      if (status == "on") {
+        msg.channel.send(`The server is already online!`)
+        return;
+      } else {
+        msg.channel.send(`Starting ${args[0]}...`);
+        client.startServer(server.identifier)
+      }
+    });
+  });
+};
+
+this.start = {};
+this.start.function = c_start;
+this.start.usage = "start <server>"
+this.start.description = "Start a server."
+this.start.role = "Trainee"
 
 function c_blacklist(msg, args) {
   var word = args.join(" ");
@@ -238,6 +270,14 @@ client.on("message", (msg) => {
         }
       }
     }
+    if (this[cmd].roles && this[cmd].roles[0]) {
+      var i;
+      var role = client.guilds.first().roles.find(r => r.name.includes(this[cmd].roles));
+      if (role.position > msg.member.highestRole.position) {
+          msg.channel.send("You do not have the required roles to use this command.")
+          return;
+      };
+    };
     this[cmd].function(msg, args);
   }
 });
