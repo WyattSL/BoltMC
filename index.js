@@ -222,7 +222,7 @@ function c_install(msg, args) {
         }
       });
     });
-});
+};
   
 this.install = {};
 this.install.function = c_install;
