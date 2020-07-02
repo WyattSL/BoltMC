@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Discord Community Central | Applications</title>
+    <script src="/apply.js" defer></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link id="favicon" rel="icon"
+href="https://cdn.discordapp.com/attachments/711085494024405112/717542733874724884/Logo.jpg" type="image/x-icon">
+  </head>
+  <body style="background-color: gray">
+    <div id="error" class="w3-container w3-red">
+      <h3>
+        Error!
+      </h3>
+      <p id="errormsg">
+        A error occured whilst setting the error message.
+      </p>
+    </div>
+    
+    <div class="w3-container w3-teal">
+      <h4>
+        <a href="/home">Discord Community Central</a>: Apply for Staff
+      </h4>
+    </div>
+    <form id="form" class="w3-container w3-light-grey">
+      <label class="w3-margin-top">Discord Tag</label>
+      <input class="w3-input w3-round" type="text" placeholder="Ex: User#0001" id="user" prefix="User" required />
+
+      <label class="w3-margin-top">Age</label>
+      <input class="w3-input w3-round" type="number" min="0" max="100" id="age" prefix="Age" required />
+      
+      <label class="w3-margin-top">What can you do for us?</label>
+      <textarea id="q1" class="w3-input w3-round-large" rows="4" prefix="What can you do for us?" required></textarea>
+      
+      <label class="w3-margin-top">Why should we accept you?</label>
+      <textarea id="q2" class="w3-input w3-round-large" rows="3" prefix="Why should we accept you?" required></textarea>
+      
+      <label class="w3-margin-top">Why should we pick you, instead of another applicant?</label>
+      <textarea id="q3" class="w3-input w3-round-large" rows="3" prefix="Why should we accept you, instead of another applicant?" required></textarea>
+      
+      <label class="w3-margin-top">Why are you applying?</label>
+      <textarea id="q4" class="w3-input w3-round-large" rows="3" prefix="Why are you applying?" required></textarea>
+      
+      <label class="w3-margin-top">What are you applying for?</label>
+      <textarea id="q5" class="w3-input w3-round-large" rows="1" prefix="What are you applying for?" required></textarea>
+      
+      <input id="submit" type="submit" class="w3-button w3-green w3-section" value="Submit" prefix="Submit">
+    </form>
+    <div id="finish">
+      <p class="w3-display-middle">
+        Your application has been submitted.
+      </p>
+    </div>
+  </body>
+</html>
