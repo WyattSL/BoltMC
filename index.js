@@ -109,14 +109,15 @@ client.on("message", (msg) => {
 
 
 setInterval(async => { // 🟢 🔴 🟡 🟤 ❓
-  var servers = await app.getAllServers()
+  app.getAllServers().then(servers => {
     var statuses = {}
     var i;
     for (i=0;i<servers.length;i++) {
-      var id = servers[i].attributes.identifier;
-      var name = servers[i].attributes.name;
-      var status = await panel.getServerStatus(id);
-      statuses[name] = status;
+      let id = servers[i].attributes.identifier;
+      let name = servers[i].attributes.name;
+      panel.getServerStatus(id).then(status => {
+        statuses[name] = status;
+      });
     }
     var Bungee = client.guilds.first().channels.find(ch => ch.id == 728016432192946236)
     if (statuses["BungeeCord"] == "on") {
@@ -130,6 +131,7 @@ setInterval(async => { // 🟢 🔴 🟡 🟤 ❓
     } else {
       Bungee.setName("❓ Proxy ❓")
     }
+  });
 }, 20500);
 
 
