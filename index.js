@@ -82,6 +82,34 @@ this.update.usage = "update"
 this.update.description = "Update the bot to the latest release on github."
 this.update.owneronly = true
 
+function c_upload(msg, args) {
+  var server = args[1]
+  var dir = args[2]
+  var url = args[3];
+  if (!server || !dir || !url) { msg.channel.send("Incorrect Usage"); return; }
+  app.getAllServers().then(servers => {
+    var server = servers.filter(s => s.attributes.name == server)
+    if (!server) {
+      msg.channel.send(`Failed to find server: ${server}`)
+      return
+    } else {
+      server=server[0].attributes;
+    }
+    if (!dir.startsWith("/")) dir = "/"+dir;
+    shell.exec(`cd /srv/daemon/${server.id}${dir}`);
+    var o = shell.exec(`wget ${url}`).stdout;
+    var x = "```";
+    msg.channel.send(`Downloading ${url} to /srv/daemon/${server.id}${dir}.`)
+    msg.channel.send(`Download Logs: ${x}${o}${x}`);
+  });
+}
+
+this.upload = {}
+this.upload.function = c_upload
+this.upload.usage = "upload <server> <dir> <url>"
+this.upload.description = "Upload a file to the directory of a server."
+this.update.owneronly = true
+
 client.on("message", (msg) => {
   if (msg.author.bot) return
   if (!msg.content.startsWith("+")) return;
