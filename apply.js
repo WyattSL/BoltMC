@@ -33,7 +33,7 @@ app.get("/submitapply", (req, res) => {
   var q6 = q["q6"];
   this.sendApplication(user, age, q2, q3, q4, q5, q6).then(resp => {
     res.end(resp.toString());
-  }
+  });
 });
 
 client.on("ready", () => {
