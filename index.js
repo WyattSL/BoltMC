@@ -224,19 +224,21 @@ function c_install(msg, args) {
         const filter = (reaction, user) => true;
         const collector = ms.createReactionCollector(filter, { time: 15000 });
         collector.on('collect', r => {
-          if (r.user == msg.author) {
-            ms.clearReactions()
-            collector.end()
-            if (options[r.emoji.name]) {
-              ms.edit("Please wait...");
-              var url = options[r.emoji.name].file.url;
-              shell.exec(`wget -P /srv/daemon-data/${server.uuid}/plugins/ ${url}`);
-              ms.edit(`${options[r.emoji.name].name} has been installed!`)
+          if (!r.user.bot) {
+            if (r.user == msg.author) {
+              ms.clearReactions()
+              collector.end()
+              if (options[r.emoji.name]) {
+                ms.edit("Please wait...");
+                var url = options[r.emoji.name].file.url;
+                shell.exec(`wget -P /srv/daemon-data/${server.uuid}/plugins/ ${url}`);
+                ms.edit(`${options[r.emoji.name].name} has been installed!`)
+              } else {
+                ms.edit("Invalid Plugin Selection")
+              }
             } else {
-              ms.edit("Invalid Plugin Selection")
+              r.remove(r.user);
             }
-          } else {
-            r.remove(r.user);
           }
         });
         collector.on('end', collected => {
