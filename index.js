@@ -173,23 +173,23 @@ this.update.owneronly = true
 function c_start(msg, args) {
   app.getAllServers(servers => {
     var server = servers.filter(function(s) {
-      if (s.name == args[0]) {
+      if (s.attributes.name == args[0]) {
         return true
       } else {
         return false
       }
     });
     if (!server) {
-      msg.channel.send(`Failed to find server: ${s.name}`)
+      msg.channel.send(`Failed to find server: ${args[0]}`)
       return;
     }
-    panel.getServerStatus(server.identifier).then(status => {
+    panel.getServerStatus(server.attributes.identifier).then(status => {
       if (status == "on") {
-        msg.channel.send(`The server is already online!`)
+        msg.channel.send(`${args[0]} is already online!`)
         return;
       } else {
         msg.channel.send(`Starting ${args[0]}...`);
-        client.startServer(server.identifier)
+        client.startServer(server.attributes.identifier)
       }
     });
   });
