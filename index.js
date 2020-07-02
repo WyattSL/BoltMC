@@ -199,13 +199,13 @@ function updateStatus(id, name) {
   var channel = client.guilds.first().channels.find(ch => ch && ch.name && (ch.name.split("』 ")[1] && ch.name.split("』 ")[1].split(" 『")[0] == name ) || ch.name == name)
   panel.getServerStatus(id).then(status => {
     if (status == "on") { // 『 』
-      channel.setName(`『🟢』 ${name} 『🟢』`)
+      channel.setName(`『🟢』 ${name}`)
     } else if (status == "off") {
-      channel.setName(`『🟢』🔴 ${name} 『🔴』`)
+      channel.setName(`『🟢』🔴 ${name}`)
     } else if (status == "starting") {
-      channel.setName(`『🟡』 ${name} 『🟡』`)
+      channel.setName(`『🟡』 ${name}`)
     } else if (status == "stopping") {
-      channel.setName(`『🟤』 ${name} 『🟤』`)
+      channel.setName(`『🟤』 ${name}`)
     } else {
       channel.setName(`❓ ${name} ❓`)
     }
