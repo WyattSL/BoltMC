@@ -114,11 +114,8 @@ setInterval(async => { // 🟢 🔴 🟡 🟤 ❓
     for (i=0;i<servers.length;i++) {
       let id = servers[i].attributes.identifier;
       let name = servers[i].attributes.name;
-      setTimeout(function(id, name) {
-      panel.getServerStatus(id).then(status => {
-        statuses[name] = status;
-      });
-      }, 500, id, name);
+      var status = await panel.getServerStatus(id)
+      statuses[name] = status
     }
     var Bungee = client.guilds.first().channels.find(ch => ch.id == 728016432192946236)
     if (statuses["BungeeCord"] == "on") {
