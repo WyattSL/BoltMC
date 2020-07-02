@@ -221,7 +221,7 @@ function c_install(msg, args) {
           if (!options[reactions[i]]) break;
           ms.react(reactions[i])
         }
-        const filter = (reaction, user) => options[reactions.name]
+        const filter = (reaction, user) => options[reaction.name]
         const collector = ms.createReactionCollector(filter, { time: 15000 });
         collector.on('collect', r => {
           if (r.user == msg.author) {
