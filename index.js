@@ -222,7 +222,7 @@ function c_install(msg, args) {
           ms.react(reactions[i])
         }
         const filter = (reaction, user) => reactions[reaction.emoji.name]
-        const collector = message.createReactionCollector(filter, { time: 15000 });
+        const collector = ms.createReactionCollector(filter, { time: 15000 });
         collector.on('collect', r => {
           if (r.user == msg.author) {
             ms.clearReactions()
