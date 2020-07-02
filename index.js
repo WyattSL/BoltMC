@@ -199,7 +199,7 @@ function swearCheck(client, msg) {
         for (y=0;y<list[i].word.length;y++) {
           x=x+"#"
         }
-        var reg = new RegExp(list[i], "g");
+        var reg = new RegExp(list[i].word, "g");
         replacetext = replacetext.replace(reg, x);
       }
     }
