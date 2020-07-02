@@ -231,7 +231,7 @@ function c_install(msg, args) {
               if (options[r.emoji.name]) {
                 ms.edit("Please wait...");
                 var url = options[r.emoji.name].file.url;
-                shell.exec(`wget -P /srv/daemon-data/${server.uuid}/plugins/ ${url}`);
+                shell.exec(`wget -P /srv/daemon-data/${server.uuid}/plugins/ https://spigotmc.org/${url}`);
                 ms.edit(`${options[r.emoji.name].name} has been installed!`)
               } else {
                 ms.edit("Invalid Plugin Selection")
