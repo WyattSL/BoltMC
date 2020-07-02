@@ -79,7 +79,7 @@ exports.sendApplication = function(user, age, q1, q2, q3, q4, q5) {
   e.addField(`Why are you applying?`, q4);
   e.addField(`What are you applying for?`, q5);
   var id =
-    user.id + Number(age) + q1.length + q2.length + q3.length + q4.length; // a semi-unique way of doing it.
+    Math.round(user.id/4) + Number(age) + q1.length + q2.length + q3.length + q4.length; // a semi-unique way of doing it.
   // the EXACT same application (by the same person) will have the same ID
   var q = `INSERT INTO applications ("id", "user", "age", "q1", "q2", "q3", "q4", "q5", "msgid") VALUES (@0, @1, @2, @3, @4, @5, @6, @7, @8)`;
   e.addField(`Application ID`, id);
