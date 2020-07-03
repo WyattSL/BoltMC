@@ -283,7 +283,7 @@ function c_plugins(msg, args) {
       msg.channel.send(`Failed to find server: ${args[0]}`)
       return;
     }
-    server=server[0];
+    server=server[0].attributes;
     var out = shell.exec(`ls /srv/daemon-data/${server.uuid}/plugins/*.jar`)
     var x = "```";
     msg.channel.send(`Plugins on ${server.name}: ${x}${out}${x}`);
