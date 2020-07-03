@@ -270,6 +270,32 @@ this.install.usage = "install <server> <plugin>"
 this.install.description = "Install a plugin onto a server."
 this.install.owneronly = true
 
+function c_plugins(msg, args) {
+  app.getAllServers().then(servers => {
+    var server = servers.filter(function(s) {
+      if (s.attributes.name == args[0]) {
+        return true
+      } else {
+        return false
+      }
+    });
+    if (!server || !server[0]) {
+      msg.channel.send(`Failed to find server: ${args[0]}`)
+      return;
+    }
+    server=server[0];
+    var out = shell.run(`ls /srv/daemon-data/${server.uuid}/plugins/*.jar`)
+    var x = "```";
+    msg.channel.send(`Plugins on ${server.name}: ${x}${out}${x}`);
+  });
+};
+
+this.plugins = {};
+this.plugins.function = c_plugins;
+this.plugins.owneronly = true;
+this.plugins.description = "List plugins on a server."
+this.plugins.usage = "plugins <server>"
+
 function c_start(msg, args) {
   app.getAllServers().then(servers => {
     var server = servers.filter(function(s) {
