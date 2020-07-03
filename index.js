@@ -13,7 +13,7 @@ const got = require("got")
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("data.db")
 
-db.serialize();
+db.serialize()
 
 w.use(bp.json())
 w.use(bp.urlencoded({extended: true}))
