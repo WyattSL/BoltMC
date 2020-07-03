@@ -284,7 +284,7 @@ function c_plugins(msg, args) {
       return;
     }
     server=server[0];
-    var out = shell.run(`ls /srv/daemon-data/${server.uuid}/plugins/*.jar`)
+    var out = shell.exec(`ls /srv/daemon-data/${server.uuid}/plugins/*.jar`)
     var x = "```";
     msg.channel.send(`Plugins on ${server.name}: ${x}${out}${x}`);
   });
