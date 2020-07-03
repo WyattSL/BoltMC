@@ -285,6 +285,10 @@ function c_plugins(msg, args) {
     }
     server=server[0].attributes;
     var out = shell.exec(`ls /srv/daemon-data/${server.uuid}/plugins/*.jar`)
+    var re = new RegExp(`/srv/daemon-data/${server.uuid}/plugins/`);
+    out=out.replace(re, "")
+    var re = new RegExp(`.jar`);
+    out=out.replace(re, "");
     var x = "```";
     msg.channel.send(`Plugins on ${server.name}: ${x}${out}${x}`);
   });
