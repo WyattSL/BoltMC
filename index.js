@@ -15,7 +15,6 @@ const applys = require("./apply.js"); // start the applybot
 const got = require("got")
 const sqlite3 = require("sqlite3").verbose();
 const mariadb = require("mariadb")
-const pool = mariadb.createConnection({host: "api.boltmc.net", user: "luckperms", password: require("./TOKEN.json").lpdb, database: "luckperms"})
 const db = new sqlite3.Database("data.db")
 const decode64 = require("Base64").atob;
 const Encode64 = require("Base64").btoa;
@@ -115,6 +114,7 @@ function payment(details, row) {
       break;
     case "Rank":
       // Get the UUID of the user.
+      var pool = mariadb.createConnection({host: "api.boltmc.net", user: "luckperms", password: require("./TOKEN.json").lpdb, database: "luckperms"})
       var q = `SELECT * FROM luckperms_players WHERE username=?`
       pool.query(q, details.Username, (err, rows) => {
         if (err) {
@@ -125,6 +125,7 @@ function payment(details, row) {
           client.channels.find(ch => ch.name.includes("purchases")).send("Unable to find UUID for user " + details.Username + ". Rank not applied.");
           return false;
         }
+        var pool = mariadb.createConnection({host: "api.boltmc.net", user: "luckperms", password: require("./TOKEN.json").lpdb, database: "luckperms"})
         var q = `INSERT INTO luckperms_user_permissions ("uuid", "permission", "value", "server", "world", "expiry", "contexts") VALUES (@0, @1, "1", "global", "global", "0", "{}")`
         pool.query(q, rows.uuid, `group.${row.methodparam}`);
         client.channels.find(ch => ch.name.includes("purchases")).send(row.methodparam + " should of been added to " + details.Username + ". Hopefully.");
