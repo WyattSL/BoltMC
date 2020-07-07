@@ -1,0 +1,214 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.bar {
+    background-color: #487885;
+    top: 0px;
+    padding: 10px;
+    display: flex;
+    text-align: center;
+    border-bottom: 2px solid #ffffff;
+    margin-bottom: 20px;
+}
+
+.header-text {
+    flex: 1;
+    margin: 0;
+    vertical-align: center;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    text-shadow: 0px 0px 5px #00000098;
+}
+
+body {
+    background-color: #33545e;
+}
+
+/* this is the part where all the questions are */
+
+.questions {
+    display: flex;
+    flex-direction: column;
+}
+
+.question {
+    flex: 1;
+    min-height: 100px;
+    background-color: #00000046;
+    max-width: 80%;
+    text-align: center;
+    margin: 35px;
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: auto;
+    padding-right: auto;
+    max-width: 750px;
+    min-width: 750px;
+    border: 1px solid #ffffff;
+    box-shadow: 0px 0px 30px #ffffff3f;
+}
+
+.question-header {
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.question-text {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.answer {
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 80%;
+    background-color: #ffffff30;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    text-align: center;
+    min-height: 30px;
+    margin: 20px;
+    margin-bottom: 40px;
+}
+
+.answer-big {
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 80%;
+    background-color: #ffffff30;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    text-align: left;
+    padding: 15px;
+    padding-bottom: 0px;
+    min-height: 30px;
+    margin: 20px;
+    margin-bottom: 40px;
+}
+
+.q7 {
+    margin-bottom: 50px;
+}
+
+.submit-button {
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 80%;
+    background-color: #ffffff30;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    text-align: center;
+    min-height: 30px;
+    margin: 20px;
+    margin-bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80%;
+    flex: 1;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 0px 0px 30px #ffffff3f;
+    max-width: 750px;
+    min-width: 750px;
+    padding-left: auto;
+    padding-right: auto;
+    margin-top: 20px;
+    margin-bottom: 50px;
+
+    transition: background-color, box-shadow 0.3s;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+    background-color: #ffffff56;
+    box-shadow: 0px 0px 30px #ffffff7e;
+}
+
+.submit-li {
+    list-style: none;
+}
+
+.footer {
+    min-height: 150px;
+    max-height: 150px;
+    background-color: #00000083;
+}
+
+.footer-text {
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.footer-text-2 {
+    color: #ffffff;
+    text-align: center;
+    padding-top: 0px;
+    text-decoration: none;
+}
+
+.after-copyright {
+    list-style: none;
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    background-color: #ffffff00;
+
+    transition: background-color 0.3s;
+}
+
+.after-copyright:hover {
+    background-color: #ffffff1e;
+}
+
+.footer-text::after {
+    position: relative;
+    content: "";
+    display: block;
+    height: 2px;
+    width: 60%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    line-height: 1;
+    opacity: 0.5;
+    background-color: #ffffff;
+    left: 0;
+    top: 75%;
+}
+
+@media all and (max-width: 800px) {
+    .question {
+        max-width: 500px;
+        min-width: 500px;
+    }
+    .submit-button {
+        max-width: 500px;
+        min-width: 500px;
+    }
+}
+
+@media all and (max-width: 550px) {
+    .question {
+        max-width: 400px;
+        min-width: 400px;
+    }
+    .submit-button {
+        max-width: 400px;
+        min-width: 400px;
+    }
+}
