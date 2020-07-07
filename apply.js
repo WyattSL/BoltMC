@@ -81,9 +81,9 @@ exports.sendApplication = function(user, age, q1, q2, q3, q4, q5) {
       e.setColor(0x0000ff);
       e.setDescription(`<@!${user.id}>`);
       e.addField(`Age`, age);
-      e.addField(`What can you do for us?`, q1);
-      e.addField(`Why should we accept you?`, q2);
-      e.addField(`Why should we pick you, instead of another applicant?`, q3);
+      e.addField(`How could you improve the server?`, q1);
+      e.addField(`What previous skills do you have?`, q2);
+      e.addField(`Why should we pick you over other applicants?`, q3);
       e.addField(`Why are you applying?`, q4);
       e.addField(`What are you applying for?`, q5);
       var id = user.id;
@@ -163,10 +163,10 @@ client.on("message", msg => {
           e.setDescription(`<@!${user.user.id}>`);
           e.setFooter(`Kindly made by ${client.owner.tag}`);
           e.addField(`Age`, res[0].age);
-          e.addField(`What can you do for us?`, res[0].q1);
-          e.addField(`Why should we accept you?`, res[0].q2);
+          e.addField(``, res[0].q1);
+          e.addField(`What previous skills do you have?`, res[0].q2);
           e.addField(
-            `Why should we pick you, instead of another applicant?`,
+            `Why should we pick you over other applicants?`,
             res[0].q3
           );
           e.addField(`Why are you applying?`, res[0].q4);
@@ -225,9 +225,9 @@ client.on("message", msg => {
         e.setDescription(`<@!${user.user.id}>`);
         e.setFooter(`Kindly made by ${client.owner.tag}`);
         e.addField(`Age`, res[0].age);
-        e.addField(`What can you do for us?`, res[0].q1);
-        e.addField(`Why should we accept you?`, res[0].q2);
-        e.addField(`Why should we pick you, instead of another applicant?`,res[0].q3);
+        e.addField(`How could you improve the server?`, res[0].q1);
+        e.addField(`What previous skills do you have?`, res[0].q2);
+        e.addField(`Why should we pick you over other applicants?`,res[0].q3);
         e.addField(`Why are you applying?`, res[0].q4);
         e.addField(`What are you applying for?`, res[0].q5);
         e.addField(`Denied By`, `<@!${msg.author.id}>`);

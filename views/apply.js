@@ -3,18 +3,15 @@ function id(id) {
   return document.getElementById(id);
 }
 
-// faster way of doing thigns
+// faster way of doing things //Edit by XP20: I'm changing all of this to just alert();
+/*
 const error = id("error");
 const errmsg = id("errormsg");
 const finished = id("finish");
-const form = id("form");
-
-error.style.display = "none";
-finished.style.display = "none";
+const form = id("form"); */
 
 function err(msg) {
-  error.style.display = "inherit";
-  errmsg.innerHTML = msg;
+  alert(msg);
 }
 
 if (localStorage.getItem("username") && localStorage.getItem("discriminator")) {
@@ -40,9 +37,7 @@ form.onsubmit = function(event) { // don't reload the page; or navigate away
       if (this.status == 200) {
         var code = this.responseText;
         if (!code || code == "0") {
-          form.style.display = "none";
-          finished.style.display = "inherit";
-          error.style.display = "none";
+          alert("Application successful!");
         } else if (code == "1") {
           err(`The specified user was not found. Please ensure all capitalization is correct. If you have any Unicode characters, be sure to include them.`);
         } else if (code == "2") {

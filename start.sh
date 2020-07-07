@@ -1,1 +1,1 @@
-node /home/Wyatt/bot/index.js
+node /home/Wyatt/bot/index.js --harmony

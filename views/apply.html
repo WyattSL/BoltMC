@@ -1,54 +1,87 @@
 <html>
-  <head>
-    <title>Discord Community Central | Applications</title>
-    <script src="/apply.js" defer></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-    <link id="favicon" rel="icon"
-href="https://cdn.discordapp.com/attachments/711085494024405112/717542733874724884/Logo.jpg" type="image/x-icon">
-  </head>
-  <body style="background-color: gray">
-    <div id="error" class="w3-container w3-red">
-      <h3>
-        Error!
-      </h3>
-      <p id="errormsg">
-        A error occured whilst setting the error message.
-      </p>
-    </div>
-    
-    <div class="w3-container w3-teal">
-      <h4>
-        Apply for BoltMC
-      </h4>
-    </div>
-    <form id="form" class="w3-container w3-light-grey">
-      <label class="w3-margin-top">Discord Tag</label>
-      <input class="w3-input w3-round" type="text" placeholder="Ex: User#0001" id="user" prefix="User" required />
+    <head>
+        <title>BoltMc - Application</title>
+        <script src="/apply.js" defer></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+        <link id="favicon" rel="icon"
+        href="https://cdn.discordapp.com/attachments/578249514675077124/704001783743250462/Untitled-1.png" type="image/x-icon">
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet"> 
+    </head>
+    <header>
+        <div class="bar">
+            <h3 class="header-text">
+                Apply for BoltMc
+            </h3>
+        </div>
+    </header>
+    <body>
+        <div class="alert-box">
 
-      <label class="w3-margin-top">Age</label>
-      <input class="w3-input w3-round" type="number" min="0" max="100" id="age" prefix="Age" required />
-      
-      <label class="w3-margin-top">What can you do for us?</label>
-      <textarea id="q1" class="w3-input w3-round-large" rows="4" prefix="What can you do for us?" required></textarea>
-      
-      <label class="w3-margin-top">Why should we accept you?</label>
-      <textarea id="q2" class="w3-input w3-round-large" rows="3" prefix="Why should we accept you?" required></textarea>
-      
-      <label class="w3-margin-top">Why should we pick you, instead of another applicant?</label>
-      <textarea id="q3" class="w3-input w3-round-large" rows="3" prefix="Why should we accept you, instead of another applicant?" required></textarea>
-      
-      <label class="w3-margin-top">Why are you applying?</label>
-      <textarea id="q4" class="w3-input w3-round-large" rows="3" prefix="Why are you applying?" required></textarea>
-      
-      <label class="w3-margin-top">What are you applying for?</label>
-      <textarea id="q5" class="w3-input w3-round-large" rows="1" prefix="What are you applying for?" required></textarea>
-      
-      <input id="submit" type="submit" class="w3-button w3-green w3-section" value="Submit" prefix="Submit">
-    </form>
-    <div id="finish">
-      <p class="w3-display-middle">
-        Your application has been submitted.
-      </p>
-    </div>
-  </body>
+        </div>
+        <div class="questions">
+            <div class="q1 question">
+                <h5 class="question-text">
+                    Discord Tag
+                </h5>
+                <input type="text" class="answer" id="user" name="q1-input" placeholder="Insert discord tag...">
+            </div>
+            <div class="q2 question">
+                <h5 class="question-text">
+                    Age
+                </h5>
+                <input type="text" class="answer" id="age" name="q2-input" placeholder="Insert your age...">
+            </div>
+            <div class="q3 question">
+                <h5 class="question-text">
+                    How could you improve the server?
+                </h5>
+                <textarea class="answer-big" id="q1" name="q3-input" cols="1" rows="3" placeholder="Insert answer..."></textarea>
+            </div>
+            <div class="q4 question">
+                <h5 class="question-text">
+                    What previous skills do you have?
+                </h5>
+                <textarea class="answer-big" id="q2" name="q4-input" cols="1" rows="2" placeholder="Insert answer..."></textarea>
+            </div>
+            <div class="q5 question">
+                <h5 class="question-text">
+                    Why should we pick you over other applicants?
+                </h5>
+                <textarea class="answer-big" id="q3" name="q5-input" cols="1" rows="2" placeholder="Insert answer..."></textarea>
+            </div>
+            <div class="q6 question">
+                <h5 class="question-text">
+                    Why are you applying?
+                </h5>
+                <textarea class="answer-big" id="q4" name="q6-input" cols="1" rows="2" placeholder="Insert answer..."></textarea>
+            </div>
+            <div class="q7 question">
+                <h5 class="question-text">
+                    What are you applying for?
+                </h5>
+                <input type="text" class="answer" id="q5" name="q7-input" placeholder="Insert staff rank...">
+            </div>
+            <div class="submit-button submit">
+                <li class="submit-li"><h5 class="question-text submit-text" href="#">
+                    Submit
+                </h5></li>
+            </div>
+        </div>
+    </body>
+    <footer class="footer">
+        <h5 class="footer-text">
+            © BoltMc.net, Inc. All rights reserved.
+        </h5>
+        <div class="after-copyright">
+            <li class="submit-li"><a href="#" class="footer-text-2">
+                Website
+            </a></li>
+        </div>
+        <div class="after-copyright">
+            <li class="submit-li"><a href="#" class="footer-text-2">
+                Discord
+            </a></li>
+        </div>
+    </footer>
 </html>

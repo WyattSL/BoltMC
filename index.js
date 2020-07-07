@@ -5,13 +5,20 @@ const shell = require("shelljs")
 const nodeactyl = require("nodeactyl")
 const express = require("express")
 const bp = require("body-parser")
-const w = express()
 const fs = require("fs")
+const priv = fs.readFileSync('/etc/letsencrypt/live/panel.boltmc.net/privkey.pem').toString();
+const cert = fs.readFileSync('/etc/letsencrypt/live/panel.boltmc.net/cert.pem').toString();
+const w = express();
+const https = require("https");
 const os = require("os");
 const applys = require("./apply.js"); // start the applybot
 const got = require("got")
 const sqlite3 = require("sqlite3").verbose();
+const mariadb = require("mariadb")
+const pool = mariadb.createPool({host: "api.boltmc.net", user: "luckperms", password: require("./TOKEN.json").lpdb, database: "luckperms"})
 const db = new sqlite3.Database("data.db")
+const decode64 = require("Base64").atob;
+const Encode64 = require("Base64").btoa;
 
 db.serialize()
 
@@ -34,6 +41,140 @@ w.post("/players", (req, res) => {
   } else {
     res.status(400).end("server or players invalid")
   }
+});
+
+w.get("/products", (req, res) => {
+  db.all(`SELECT * FROM products`, function(err, rows) {
+    if (err) throw err;
+    res.set("Access-Control-Allow-Origin", "*").json(rows);
+  });                                  
+});                                                                                                       
+
+w.get("/manage", (req, res) => {
+  if (!req.headers.authorization) {
+    res.set("WWW-Authenticate", "Basic").sendStatus(401);
+    return;                                                           
+  }
+  var auth = decode64(req.headers.authorization.split(" ")[1]);
+  if (require("./TOKEN.json").ACCS.includes(auth)) {
+    res.sendFile("/home/Wyatt/bot/views/manage.html")
+  } else {
+    res.sendStatus(403);
+  }
+});
+
+w.post("/shop/add", (req, res) => {
+  if (!req.headers.authorization) {
+    res.set("WWW-Authenticate", "Basic").sendStatus(401);
+    return;                                                           
+  }
+  var auth = decode64(req.headers.authorization.split(" ")[1]);
+  if (require("./TOKEN.json").ACCS.includes(auth)) {
+    db.run(`INSERT INTO products ("name", "category", "price", "description") VALUES (@0, @1, @2, @3)`, req.body.name, req.body.category, req.body.price, req.body.description);
+    res.redirect("/manage")
+  } else {
+    res.sendStatus(403);
+  }
+});
+
+w.post("/shop/del", (req, res) => {
+  if (!req.headers.authorization) {
+    res.set("WWW-Authenticate", "Basic").sendStatus(401);
+    return;                                                           
+  }
+  var auth = decode64(req.headers.authorization.split(" ")[1]);
+  if (require("./TOKEN.json").ACCS.includes(auth)) {
+    db.run(`DELETE FROM products WHERE name=?`, req.body.name);
+    res.redirect("/manage")
+  } else {
+    res.sendStatus(403);
+  }
+});
+
+w.options("/payment", (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*").set("Access-Control-Allow-Methods", "POST, OPTIONS").set("Access-Control-Allow-Headers", "Content-Type").sendStatus(204);
+});
+
+function payment(details, row) {
+  if (!details || !row) return false;
+  var embed = new RichEmbed;
+  var fn = details.payer.name.given_name || "<No Name Specified>"
+  var ln = details.payer.name.surname || ""
+  embed.setAuthor(`${fn} ${ln}`);
+  embed.setTitle(`Purchase of ${details.product.name}`);
+  embed.addField(`Spent`, details.product.price);
+  var d = new Date(details.create_time)
+  embed.setTimestamp(d);
+  embed.setFooter(`Wonderful Bot + Payment Handling by WyattL#3477`)
+  embed.addField(`Username`, details.Username);
+  embed.addField(`Transaction ID`, details.id);
+  client.channels.find(ch => ch.name.includes("purchases")).send(embed);
+  switch (row.method) {
+    case "None": 
+      // Awesome! Don't do anything!
+      break;
+    default:
+      client.channels.find(ch => ch.name.includes("purchases")).send(`There was a issue whilst applying the above purchase. Application Method Unknown`);
+      break;
+  }
+}
+
+w.post("/payment", (req, res) => {
+  if (!req.body.details && !req.body.id) {
+    res.set("Access-Control-Allow-Origin", "*").end("There were issues with your request. [5]");
+    return;
+  }
+  var details = req.body;
+  var item = details.product;
+  var product = item;
+  var paid = details.purchase_units[0].amount.value;
+  var cur = details.purchase_units[0].amount.currency;
+  if (cur == "USD" && (product.price != paid)) {
+    res.set("Access-Control-Allow-Origin", "*").end(`There were issues verifying your payment. [1]`);
+    return;
+  }
+  db.get(`SELECT * FROM products WHERE name=@0 AND price=@1`, product.name, product.price, function(err, row) {
+    if (err) {
+      res.set("Access-Control-Allow-Origin", "*").end(`[2] SQL ERROR: ${err}`);
+      throw err;
+    }
+    if (!row) {
+      res.set("Access-Control-Allow-Origin", "*").end(`There were issues verifying your payment. [3]`);
+      return;
+    }
+    var ID = require("./TOKEN.json").PAYID;
+    var SEC = require("./TOKEN.json").PAYSEC;
+    var auth = Encode64(`${ID}:${SEC}`);
+    var url = `https://api.sandbox.paypal.com/v1/oauth2/token`;
+    var r = got.post(url, {
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "Content-Type": `x-www-form-urlencoded`
+      },
+      body: {
+        "grant_type": "client_credentials"
+      }
+    }).then(r => {
+      console.log(r.body);
+      console.log(r.status);
+      console.log(r.statusCode);
+      console.log(r.statusText);
+      var token = JSON.parse(r.body).access_token;
+      console.log(token);
+      var url = details.links[0].href;
+      var r = got.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(r => {
+        var data = JSON.parse(r.body);
+        if (data && r.statusCode == 200) {
+          res.set("Access-Control-Allow-Origin", "*").end(`Success. [0]`);
+          payment(details, row);
+        }
+      });
+    });
+  });
 });
 
 client.on("ready", () => {
@@ -420,6 +561,7 @@ client.on("message", (msg) => {
 function updateStatus(id, name) {
   if (name == "BungeeCord") name = "Proxy"
   var channel = client.guilds.first().channels.find(ch => ch && ch.name && (ch.name.split("』 ")[1] && ch.name.split("』 ")[1].split(" 『")[0] == name ) || ch.name == name)
+  if (!channel) return;
   panel.getServerStatus(id).then(status => {
     if (status == "on") { // 『 』
       channel.setName(`『🟢』 ${name}`)
@@ -465,4 +607,10 @@ panel.login('https://panel.boltmc.net', require("./TOKEN.json").PANEL, (ready, m
   }
 });
 
-w.listen(3000)
+
+https.createServer({
+  key: priv,
+  cert: cert
+}, w).listen(3000, function () {
+  console.log('API is now listening for requests.')
+})
