@@ -135,7 +135,7 @@ function payment(details, row) {
               rows = rows[0]
               console.log(`Found UUID for ${details.Username}: ${rows.uuid}!`);
               var q = `INSERT INTO luckperms_user_permissions ("uuid", "permission", "value", "server", "world", "expiry", "contexts") VALUES (@0, @1, "1", "global", "global", "0", "{}")`
-              pool.query(q, rows.uuid, `group.${row.methodparam}`, function(error) {
+              pool.query(q, [rows.uuid, `group.${row.methodparam}`], function(error) {
                 if (error) {
                   client.channels.find(ch => ch.name.includes("purchases")).send("SQL error whilst applying their rank: " + error + ". Rank not applied.");
                   throw error;
