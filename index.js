@@ -114,12 +114,12 @@ function payment(details, row) {
       break;
     case "Rank":
       // Get the UUID of the user.
-      var pool = mariadb.createConnection({host: "api.boltmc.net", user: "luckperms", password: require("./TOKEN.json").lpdb, database: "luckperms"})
+      var pool = mysql.createConnection({host: "api.boltmc.net", user: "luckperms", password: require("./TOKEN.json").lpdb, database: "luckperms"})
         pool.connect(err => {
           if (err) {
-            console.log(`Error while connecting to mariadb: ${err}`)
+            console.log(`Error while connecting to SQL: ${err}`)
           } else {
-            console.log(`Connected to LuckPerms MariaDB`)
+            console.log(`Connected to LuckPerms SQL`)
           }
         });
         console.log(`Pool created, ${JSON.stringify(pool)}`);
