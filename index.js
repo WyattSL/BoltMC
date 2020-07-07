@@ -122,7 +122,6 @@ function payment(details, row) {
             return false;
           } else {
             console.log(`Connected to LuckPerms SQL`)
-            console.log(`Pool created, ${JSON.stringify(pool)}`);
             var q = `SELECT * FROM luckperms_players WHERE username=?`
             pool.query(q, details.Username, (err, rows) => {
               if (err) {
