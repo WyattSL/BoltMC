@@ -114,7 +114,7 @@ function payment(details, row) {
       break;
     case "Rank":
       // Get the UUID of the user.
-      mariadb.createConnection({host: "api.boltmc.net", user: "luckperms", password: require("./TOKEN.json").lpdb, database: "luckperms"}).then(pool => {
+      var pool = mariadb.createConnection({host: "api.boltmc.net", user: "luckperms", password: require("./TOKEN.json").lpdb, database: "luckperms"})
         pool.connect(err => {
           if (err) {
             console.log(`Error while connecting to mariadb: ${err}`)
@@ -138,7 +138,6 @@ function payment(details, row) {
           pool.query(q, rows.uuid, `group.${row.methodparam}`);
           client.channels.find(ch => ch.name.includes("purchases")).send(row.methodparam + " should of been added to " + details.Username + ". Hopefully.");
         });
-      });
       break;
     default:
       client.channels.find(ch => ch.name.includes("purchases")).send(`There was a issue whilst applying the above purchase. Application Method Unknown`);
