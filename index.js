@@ -117,26 +117,28 @@ function payment(details, row) {
       var pool = mysql.createConnection({host: "api.boltmc.net", user: "luckperms", password: require("./TOKEN.json").lpdb, database: "luckperms"})
         pool.connect(err => {
           if (err) {
-            console.log(`Error while connecting to SQL: ${err}`)
+            console.log(`Error while connecting to SQL: ${err}`);
+            client.channels.find(ch => ch.name.includes("purchases")).send(`Error while connecting to SQL: ${err}. Rank not applied.`);
+            return false;
           } else {
             console.log(`Connected to LuckPerms SQL`)
-          }
-        });
-        console.log(`Pool created, ${JSON.stringify(pool)}`);
-        var q = `SELECT * FROM luckperms_players WHERE username=?`
-        pool.query(q, details.Username, (err, rows) => {
-          if (err) {
-            client.channels.find(ch => ch.name.includes("purchases")).send("SQL error whilst applying rank to " + details.Username + ", attempted to find UUID. Error: " + err + ". Rank not applied.");
-            throw err;
-          }
-          if (!rows || !rows[0]) {
-            client.channels.find(ch => ch.name.includes("purchases")).send("Unable to find UUID for user " + details.Username + ". Rank not applied.");
-            return false;
-          }
-          console.log(`Found UUID for ${details.Username}: ${rows.UUID}!`);
-          var q = `INSERT INTO luckperms_user_permissions ("uuid", "permission", "value", "server", "world", "expiry", "contexts") VALUES (@0, @1, "1", "global", "global", "0", "{}")`
-          pool.query(q, rows.uuid, `group.${row.methodparam}`);
-          client.channels.find(ch => ch.name.includes("purchases")).send(row.methodparam + " should of been added to " + details.Username + ". Hopefully.");
+            console.log(`Pool created, ${JSON.stringify(pool)}`);
+            var q = `SELECT * FROM luckperms_players WHERE username=?`
+            pool.query(q, details.Username, (err, rows) => {
+              if (err) {
+                client.channels.find(ch => ch.name.includes("purchases")).send("SQL error whilst applying rank to " + details.Username + ", attempted to find UUID. Error: " + err + ". Rank not applied.");
+                throw err;
+              }
+              if (!rows || !rows[0]) {
+                client.channels.find(ch => ch.name.includes("purchases")).send("Unable to find UUID for user " + details.Username + ". Rank not applied.");
+                return false;
+              }
+              console.log(`Found UUID for ${details.Username}: ${rows.UUID}!`);
+              var q = `INSERT INTO luckperms_user_permissions ("uuid", "permission", "value", "server", "world", "expiry", "contexts") VALUES (@0, @1, "1", "global", "global", "0", "{}")`
+              pool.query(q, rows.uuid, `group.${row.methodparam}`);
+              client.channels.find(ch => ch.name.includes("purchases")).send(row.methodparam + " should of been added to " + details.Username + ". Hopefully.");
+            });
+          };
         });
       break;
     default:
