@@ -69,7 +69,7 @@ w.post("/shop/add", (req, res) => {
   }
   var auth = decode64(req.headers.authorization.split(" ")[1]);
   if (require("./TOKEN.json").ACCS.includes(auth)) {
-    db.run(`INSERT INTO products ("name", "category", "price", "description") VALUES (@0, @1, @2, @3)`, req.body.name, req.body.category, req.body.price, req.body.description);
+    db.run(`INSERT INTO products ("name", "category", "price", "description", "method", "methodparam") VALUES (@0, @1, @2, @3, @4, @5)`, req.body.name, req.body.category, req.body.price, req.body.description);
     res.redirect("/manage")
   } else {
     res.sendStatus(403);
