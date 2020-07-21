@@ -42,7 +42,7 @@ w.post("/trello", (req, res) => {
       e.setTitle(req.body.action.data.card.name);
       e.setAuthor(req.body.action.memberCreator.fullName);
       e.setTimestamp(req.body.action.date);
-      e.setDescription(req.body.data.text)
+      e.setDescription(req.body.action.data.text)
       client.trello.send(`Comment Added`, e);
       break;
     default:
