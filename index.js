@@ -28,6 +28,14 @@ w.get("/", (req, res) => { // ensure the web server is operational
   res.sendStatus(200)
 });
 
+w.post("/trello", (req, res) => {
+  res.sendStatus(200)
+});
+
+w.get("/trello", (req, res) => {
+  res.sendStatus(200)
+});
+
 w.post("/players", (req, res) => {
   if (req.query.server && req.body.players) {
     db.run(`DELETE FROM players WHERE server=?`, req.query.server);
@@ -647,3 +655,5 @@ https.createServer({
 }, w).listen(3000, function () {
   console.log('API is now listening for requests.')
 })
+
+w.listen(3001);
