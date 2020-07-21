@@ -29,7 +29,25 @@ w.get("/", (req, res) => { // ensure the web server is operational
 });
 
 w.post("/trello", (req, res) => {
-  res.sendStatus(200)
+  console.log("Trello Webhook Request");
+  console.log(req.body);
+  var action = req.body.action.type;
+  if (!action) {
+    res.status(400).end();
+    return;
+  }
+  switch (action) {
+    case "createCard":
+      var e = new RichEmbed;
+      e.setTitle(req.body.action.data.card.name);
+      e.setAuthor(req.body.action.memberCreator.fullName);
+      e.setTimestamp(req.body.action.date);
+      client.trello.send(e);
+      break;
+    default:
+      res.status(400).end();
+      break;
+  };
 });
 
 w.get("/trello", (req, res) => {
@@ -219,7 +237,8 @@ w.post("/payment", (req, res) => {
 });
 
 client.on("ready", () => {
-  console.log("Bot Ready")
+  console.log("Bot Ready");
+  client.trello = client.channels.find(ch => ch.name.includes("trello"));
 });
 
 
