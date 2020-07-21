@@ -46,8 +46,9 @@ w.post("/trello", (req, res) => {
       break;
     default:
       res.status(400).end();
-      break;
+      return;
   };
+  res.sendStatus(200);
 });
 
 w.get("/trello", (req, res) => {
