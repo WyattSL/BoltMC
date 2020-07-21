@@ -37,12 +37,13 @@ w.post("/trello", (req, res) => {
     return;
   }
   switch (action) {
-    case "createCard":
+    case "commentCard":
       var e = new RichEmbed;
       e.setTitle(req.body.action.data.card.name);
       e.setAuthor(req.body.action.memberCreator.fullName);
       e.setTimestamp(req.body.action.date);
-      client.trello.send(e);
+      e.setDescription(req.body.data.text)
+      client.trello.send(`Comment Added`, e);
       break;
     default:
       res.status(400).end();
