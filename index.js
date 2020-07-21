@@ -39,11 +39,24 @@ w.post("/trello", (req, res) => {
   switch (action) {
     case "commentCard":
       var e = new RichEmbed;
-      e.setTitle(req.body.action.data.card.name);
-      e.setAuthor(req.body.action.memberCreator.fullName);
+      e.setTitle(`${req.body.action.data.card.name} (${req.body.action.data.list.name})`);
+      e.setAuthor(req.body.action.memberCreator.fullName, req.body.action.memberCreator.avatarUrl);
       e.setTimestamp(req.body.action.date);
       e.setDescription(req.body.action.data.text)
       client.trello.send(`Comment Added`, e);
+      break;
+    case "updateCard":
+      var m = req.body.action.display.translationKey
+      if (m == "action_move_card_from_list_to_list") {
+        var o = req.body.action.display.entities.listBefore.text;
+        var n = req.body.action.display.entities.listAfter.text;
+        var e = new RichEmbed;
+        e.setTitle(`${req.body.action.data.card.name}`);
+        e.setDescription(`Was moved from ${o} to ${n}.`);
+        e.setAuthor(req.body.action.memberCreator.fullName, req.body.action.memberCreator.avatarUrl);
+        e.setTimestamp(req.body.action.date);
+        client.trello.send(`Card Updated`, e);
+      }
       break;
     default:
       res.status(400).end();
