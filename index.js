@@ -30,7 +30,7 @@ w.get("/", (req, res) => { // ensure the web server is operational
 
 w.post("/trello", (req, res) => {
   console.log("Trello Webhook Request");
-  console.log(req.body);
+  console.log(JSON.stringify(req.body));
   var action = req.body.action.type;
   if (!action) {
     res.status(400).end();
